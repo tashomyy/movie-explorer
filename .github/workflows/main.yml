@@ -1,0 +1,45 @@
+name: CI
+
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+    branches: ["main"]
+  workflow_dispatch:
+
+jobs:
+  Docker:
+    runs-on: ${{ fromJSON('["ubuntu-latest", "self-hosted"]')[github.repository == 'github/docs-internal'] }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set API URL
+        env:
+          VITE_API_URL: ${{ secrets.VITE_API_URL }}
+        run: |
+          echo "VITE_API_URL=${VITE_API_URL}" >> .env
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build the project
+        run: npm run build
+
+      - name: Determine image tag
+        id: tag
+        run: echo "IMAGE_TAG=${{ github.run_number }}" >> $GITHUB_ENV
+
+      - name: Login to DockerHub
+        run: echo "${{ secrets.DOCKERHUB_PASSWORD }}" | docker login -u "${{ secrets.DOCKERHUB_USERNAME }}" --password-stdin
+
+      - name: Build Docker image
+        run: docker build . --file Dockerfile --tag tashomy/movie-explorer:${{ env.IMAGE_TAG }} --build-arg VITE_API_URL=${{ secrets.VITE_API_URL }}
+
+      - name: Push Docker image
+        run: docker push tashomy/movie-explorer:${{ env.IMAGE_TAG }}
