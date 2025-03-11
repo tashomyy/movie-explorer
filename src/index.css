@@ -1,2 +1,84 @@
 @import "tailwindcss";
 @custom-variant dark (&:where(.dark, .dark *));
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Montserrat:wght@400;600&family=Source+Sans+Pro:wght@400;700&display=swap");
+
+:root {
+  --color-primary: #f5f5f5;
+  --color-secondary: #ddd;
+  --color-textPrimary: #333;
+  --color-textMute: #666;
+  --color-accent: #007bff;
+  --color-cardBg: #ffffff;
+  --color-border: #ccc;
+  --color-hover: #007bff;
+  --color-danger: #dc3545;
+  --color-success: #28a745;
+
+  --font-family-headline: "Inter", sans-serif;
+  --font-family-body: "Source Sans Pro", sans-serif;
+  --font-family-caption: "Montserrat", sans-serif;
+}
+
+.dark {
+  --color-primary: #222;
+  --color-secondary: #333;
+  --color-textPrimary: #f1f1f1;
+  --color-textMute: #bbb;
+  --color-accent: #0096ff;
+  --color-cardBg: #2b2b2b;
+  --color-border: #555;
+  --color-hover: #0056b3;
+  --color-danger: #ff4d4d;
+  --color-success: #48c774;
+}
+
+@theme {
+  /* colors */
+  --color-primary: var(--color-primary);
+  --color-secondary: var(--color-secondary);
+  --color-text-primary: var(--color-textPrimary);
+  --color-text-muted: var(--color-textMute);
+  --color-accent: var(--color-accent);
+  --color-card: var(--color-cardBg);
+  --color-border-color: var(--color-border);
+  --color-hover-color: var(--color-hover);
+  --color-danger: var(--color-danger);
+  --color-success: var(--color-success);
+  /*  font families */
+  --font-heading: var(--font-family-headline);
+  --font-body: var(--font-family-body);
+  --font-caption: var(--font-family-caption);
+}
+
+body {
+  @apply bg-primary text-text-primary font-body;
+}
+
+/* for main page headings */
+.main-heading {
+  @apply text-text-primary text-3xl md:text-4xl lg:text-5xl font-heading font-bold;
+}
+
+/* for section headings */
+.secondary-heading {
+  @apply text-text-primary text-xl md:text-2xl lg:text-3xl font-heading;
+}
+
+/* for buttons, card titles etc */
+.element-heading {
+  @apply text-text-primary text-base md:text-lg lg:text-xl font-heading;
+}
+
+/* for main text */
+.primary-body {
+  @apply text-text-primary text-sm md:text-base lg:text-lg font-body;
+}
+
+/* for captions */
+.secondary-body {
+  @apply text-text-primary text-xs md:text-sm lg:text-base font-caption italic;
+}
+
+.tw-px {
+  @apply px-4 md:px-6 lg:px-8;
+}
