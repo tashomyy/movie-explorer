@@ -19,7 +19,7 @@ const MoviesComponent = ({ moviesPromise }: MoviesProps) => {
   const movies = use(moviesPromise);
   console.log(movies);
   return (
-    <ul className="mx-auto w-max my-5 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+    <ul className="mx-auto w-full my-5 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
       {movies.results.map((movie) => (
         <MovieCard movie={movie} key={movie.id} />
       ))}

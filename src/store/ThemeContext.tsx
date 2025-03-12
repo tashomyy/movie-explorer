@@ -6,6 +6,7 @@ import React, {
   ReactNode,
 } from "react";
 import { Theme } from "../lib/enums";
+import { toast } from "react-toastify";
 
 interface ThemeContextType {
   theme: Theme;
@@ -50,6 +51,7 @@ export const ThemeProvider: React.FC<ThemeProviderProps> = ({ children }) => {
 export const useTheme = (): ThemeContextType => {
   const context = useContext(ThemeContext);
   if (!context) {
+    toast.error("useTheme must be used within a ThemeProvider");
     throw new Error("useTheme must be used within a ThemeProvider");
   }
   return context;
