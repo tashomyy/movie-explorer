@@ -1,7 +1,14 @@
 import { use } from "react";
+import MovieCard from "./MovieCard";
 
 interface Movie {
-  results: { id: number; title: string }[];
+  results: {
+    id: number;
+    title: string;
+    poster_path: string;
+    overview: string;
+    vote_average: number;
+  }[];
 }
 
 interface MoviesProps {
@@ -12,9 +19,9 @@ const MoviesComponent = ({ moviesPromise }: MoviesProps) => {
   const movies = use(moviesPromise);
   console.log(movies);
   return (
-    <ul className="mx-auto w-max my-5">
+    <ul className="mx-auto w-max my-5 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
       {movies.results.map((movie) => (
-        <li key={movie.id}>{movie.title}</li>
+        <MovieCard movie={movie} key={movie.id} />
       ))}
     </ul>
   );
