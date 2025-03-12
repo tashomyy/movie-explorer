@@ -35,7 +35,7 @@ const MoviesComponent = () => {
               {({ onItemsRendered, ref }) => (
                 <Grid
                   height={height}
-                  width={width}
+                  width={width + 17}
                   columnCount={COLUMN_COUNT}
                   rowCount={rowCount}
                   columnWidth={columnWidth}
