@@ -55,7 +55,7 @@ body {
 }
 
 /* for main page headings */
-.main-heading {
+.primary-heading {
   @apply text-text-primary text-3xl md:text-4xl lg:text-5xl font-heading font-bold;
 }
 
