@@ -11,7 +11,7 @@ interface MovieCardProps {
 const MovieCard = ({ movie }: MovieCardProps) => {
   return (
     <div className="relative flex flex-col gap-2 items-center justify-start text-center">
-      <h2 className="element-heading">{movie.title}</h2>
+      <h2 className="secondary-heading font-bold">{movie.title}</h2>
       <img
         className="w-max"
         src={`${import.meta.env.VITE_IMAGE_URL}${movie.poster_path}`}
