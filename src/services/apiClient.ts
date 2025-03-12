@@ -1,8 +1,9 @@
 import axios, { AxiosInstance } from "axios";
 
-const urlBase: string = import.meta.env.VITE_API_URL || "";
+export const BASE_URL: string = import.meta.env.VITE_API_URL || "";
+export const API_KEY: string = import.meta.env.VITE_TMDB_API_KEY || "";
 
-export const apiClient: AxiosInstance = axios.create({ baseURL: urlBase });
+export const apiClient: AxiosInstance = axios.create({ baseURL: BASE_URL });
 
 apiClient.interceptors.request.use(
   (config) => {

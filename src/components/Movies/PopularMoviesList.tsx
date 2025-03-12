@@ -1,29 +1,91 @@
-import { use } from "react";
 import MovieCard from "./MovieCard";
+import {
+  FixedSizeGrid as Grid,
+  GridOnItemsRenderedProps,
+  GridChildComponentProps,
+} from "react-window";
+import InfiniteLoader from "react-window-infinite-loader";
+import AutoSizer from "react-virtualized-auto-sizer";
+import { useMovies } from "../../hooks/useMovies";
 
-interface Movie {
-  results: {
-    id: number;
-    title: string;
-    poster_path: string;
-    overview: string;
-    vote_average: number;
-  }[];
-}
+const COLUMN_COUNT = 2;
+const ITEM_HEIGHT = 400;
+const MoviesComponent = () => {
+  const { movies, fetchNextPage, hasMore, isLoading } = useMovies();
 
-interface MoviesProps {
-  moviesPromise: Promise<Movie>;
-}
+  const rowCount = Math.ceil(movies.length / COLUMN_COUNT);
+  const itemCount = hasMore ? movies.length + COLUMN_COUNT : movies.length;
 
-const MoviesComponent = ({ moviesPromise }: MoviesProps) => {
-  const movies = use(moviesPromise);
-  console.log(movies);
+  const isItemLoaded = (index: number) => index < movies.length;
+
+  const loadMoreItems = isLoading ? () => {} : fetchNextPage;
+
   return (
-    <ul className="mx-auto w-full my-5 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-y-16">
-      {movies.results.map((movie) => (
-        <MovieCard movie={movie} key={movie.id} />
-      ))}
-    </ul>
+    <div className="h-[80vh] w-full">
+      <AutoSizer>
+        {({ height, width }) => {
+          const columnWidth = width / COLUMN_COUNT;
+
+          return (
+            <InfiniteLoader
+              isItemLoaded={isItemLoaded}
+              itemCount={itemCount}
+              loadMoreItems={loadMoreItems}
+            >
+              {({ onItemsRendered, ref }) => (
+                <Grid
+                  height={height}
+                  width={width}
+                  columnCount={COLUMN_COUNT}
+                  rowCount={rowCount}
+                  columnWidth={columnWidth}
+                  rowHeight={ITEM_HEIGHT}
+                  onItemsRendered={({
+                    overscanRowStartIndex,
+                    overscanRowStopIndex,
+                    visibleRowStartIndex,
+                    visibleRowStopIndex,
+                  }: GridOnItemsRenderedProps) =>
+                    onItemsRendered({
+                      overscanStartIndex: overscanRowStartIndex * COLUMN_COUNT,
+                      overscanStopIndex: overscanRowStopIndex * COLUMN_COUNT,
+                      visibleStartIndex: visibleRowStartIndex * COLUMN_COUNT,
+                      visibleStopIndex: visibleRowStopIndex * COLUMN_COUNT,
+                    })
+                  }
+                  ref={ref}
+                >
+                  {({
+                    columnIndex,
+                    rowIndex,
+                    style,
+                  }: GridChildComponentProps) => {
+                    const movieIndex = rowIndex * COLUMN_COUNT + columnIndex;
+                    if (!isItemLoaded(movieIndex)) {
+                      return (
+                        <div
+                          style={style}
+                          className="flex justify-center items-center"
+                        >
+                          Loading...
+                        </div>
+                      );
+                    }
+
+                    const movie = movies[movieIndex];
+                    return movie ? (
+                      <div style={style} className="p-2">
+                        <MovieCard movie={movie} />
+                      </div>
+                    ) : null;
+                  }}
+                </Grid>
+              )}
+            </InfiniteLoader>
+          );
+        }}
+      </AutoSizer>
+    </div>
   );
 };
 

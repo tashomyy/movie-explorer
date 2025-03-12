@@ -1,9 +1,6 @@
 import { ErrorBoundary } from "react-error-boundary";
 import { Suspense } from "react";
-import { fetchPopularMovies } from "../services/movies";
 import MoviesComponent from "../components/Movies/PopularMoviesList";
-
-const moviesPromise = fetchPopularMovies();
 
 const Home = () => {
   const centerClassNameTemp =
@@ -26,7 +23,7 @@ const Home = () => {
             <div className={centerClassNameTemp}>Loading movies...</div>
           }
         >
-          <MoviesComponent moviesPromise={moviesPromise} />
+          <MoviesComponent />
         </Suspense>
       </ErrorBoundary>
     </div>
