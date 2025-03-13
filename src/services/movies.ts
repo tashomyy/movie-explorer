@@ -15,3 +15,20 @@ export const fetchPopularMovies = async (page: number) => {
     );
   }
 };
+
+export const fetchSearchMovies = async (name: string, page: number) => {
+  try {
+    const response = await apiClient.get(
+      `/search/movie?query=${name}&page=${page}`
+    );
+    return response.data;
+  } catch (error: any) {
+    toast.error(
+      error?.response?.data?.message ||
+        "There was an error while fetching the search movies"
+    );
+    throw new Error(
+      error?.response?.data?.message || "Failed to fetch search movies"
+    );
+  }
+};
