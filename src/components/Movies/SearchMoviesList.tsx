@@ -11,19 +11,23 @@ const SearchMoviesList = () => {
   const [query, setQuery] = useState("");
   const [loading, setLoading] = useState(false);
   const debouncedQuery = useDebounce(query, 500);
+  const [empty, setEmpty] = useState(false);
 
   useEffect(() => {
     if (!debouncedQuery) {
       setMovies([]);
+      setEmpty(false);
       return;
     }
 
     setLoading(true);
+    setEmpty(false);
     fetchSearchMovies(debouncedQuery, page).then((data) => {
       setMovies((prev) =>
         page === 1 ? data.results : [...prev, ...data.results]
       );
       setLoading(false);
+      setEmpty(data.results.length === 0);
     });
   }, [debouncedQuery, page]);
 
@@ -35,13 +39,16 @@ const SearchMoviesList = () => {
       setPage((prev) => prev + 1);
     }
   };
+
+  const queryNotEmpty = query?.length !== 0;
+
   return (
     <div
-      className={`app flex flex-col bg-card rounded-lg p-4 ${
-        query?.length !== 0 ? "min-h-[500px] h-[70vh]" : "h-max"
+      className={`app flex flex-col bg-card rounded-lg px-4 py-12 ${
+        queryNotEmpty ? "min-h-[500px] h-[70vh]" : "h-max"
       }`}
     >
-      <h1 className="secondary-heading text-center">👀 Movie finder 👀</h1>
+      <h1 className="primary-heading text-center">👀 Movie finder 👀</h1>
       <div className="flex justify-center my-4">
         <input
           type="text"
@@ -56,15 +63,26 @@ const SearchMoviesList = () => {
         {query && (
           <button
             onClick={() => setQuery("")}
-            className="ml-2 text-red-400 cursor-pointer"
+            className="ml-2 px-3 py-1 text-white bg-red-400 rounded-md hover:bg-red-500 transition-colors cursor-pointer"
           >
             Reset
           </button>
         )}
       </div>
 
-      <div className="flex-1 overflow-y-auto px-4" onScroll={handleScroll}>
-        <MoviesList moviesData={movies} />
+      <div
+        className={`flex-1 overflow-y-auto px-4 transition-[opacity] duration-300 flex-col ${
+          queryNotEmpty ? "opacity-100 flex" : "opacity-0 hidden"
+        }`}
+        onScroll={handleScroll}
+      >
+        {!empty ? (
+          <MoviesList moviesData={movies} />
+        ) : (
+          <h1 className="text-center my-auto primary-heading">
+            Ooops.. Looks like we can't find what you are looking for
+          </h1>
+        )}
         {loading && (
           <div className="text-center my-5">Loading more movies...</div>
         )}

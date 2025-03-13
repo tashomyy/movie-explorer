@@ -21,7 +21,7 @@ const MovieCard = ({ movie }: MovieCardProps) => {
         {imageUrl ? (
           <img
             src={imageUrl}
-            alt={movie.title}
+            alt={movie?.title || ""}
             loading="lazy"
             onLoad={() => setIsLoaded(true)}
             onLoadStart={() => setIsLoaded(false)}
@@ -40,13 +40,13 @@ const MovieCard = ({ movie }: MovieCardProps) => {
 
       <div className="relative w-full h-max flex flex-col gap-2 justify-start items-center text-center bg-card/60 hover:bg-card/80 transition-colors duration-200 cursor-pointer rounded-xl px-2 py-4 backdrop-blur-[3px] transition-transform hover:scale-105">
         <h2 className="secondary-heading font-semibold pointer-events-none">
-          {movie.title}
+          {movie?.title || ""}
         </h2>
         <p className="primary-body pointer-events-none line-clamp-3">
-          {movie.overview}
+          {movie?.overview || ""}
         </p>
         <span className="secondary-body font-bold pointer-events-none">
-          {movie.vote_average.toFixed(1)} ⭐
+          {movie.vote_average?.toFixed(1)} ⭐
         </span>
       </div>
     </Link>
