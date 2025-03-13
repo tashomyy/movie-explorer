@@ -25,7 +25,7 @@ const MovieCard = ({ movie }: MovieCardProps) => {
           {movie.overview.slice(0, 100)}...
         </p>
         <span className="secondary-body font-bold cursor-default">
-          {movie.vote_average} ⭐
+          {movie.vote_average.toFixed(1)} ⭐
         </span>
       </div>
     </div>
