@@ -1,20 +1,15 @@
 import { Link } from "react-router-dom";
+import { Movie } from "../../lib/types";
 
 interface MovieCardProps {
-  movie: {
-    id: number;
-    title: string;
-    poster_path: string;
-    overview: string;
-    vote_average: number;
-  };
+  movie: Movie;
 }
 
 const MovieCard = ({ movie }: MovieCardProps) => {
   return (
     <Link
       to={"/page"}
-      className="relative flex flex-col gap-3 justify-end items-center text-center bg-card rounded-xl p-2  shadow-lg h-full isolate group"
+      className="relative flex flex-col gap-3 justify-end items-center text-center bg-card rounded-xl p-4  shadow-lg h-[500px] isolate group"
     >
       <div
         className="absolute inset-0 w-full h-full z-[-1] p-4 rounded-xl bg-cover bg-no-repeat"
