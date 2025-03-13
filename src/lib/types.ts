@@ -5,3 +5,8 @@ export interface Movie {
   overview: string;
   vote_average: number;
 }
+
+export interface Genre {
+  id: number;
+  name: string;
+}

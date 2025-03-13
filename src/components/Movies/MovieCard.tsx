@@ -38,7 +38,7 @@ const MovieCard = ({ movie }: MovieCardProps) => {
         )}
       </div>
 
-      <div className="relative w-full h-max flex flex-col gap-2 justify-start items-center text-center bg-card/60 hover:bg-card/80 transition-colors duration-200 cursor-pointer rounded-xl px-2 py-4 backdrop-blur-[3px] transition-transform hover:scale-105">
+      <div className="relative w-full h-max flex flex-col gap-2 justify-start items-center text-center bg-card/60 group-hover:bg-card/80 transition-colors duration-200 cursor-pointer rounded-xl px-2 py-4 backdrop-blur-[3px] transition-transform group-hover:scale-105">
         <h2 className="secondary-heading font-semibold pointer-events-none">
           {movie?.title || ""}
         </h2>
