@@ -1,10 +1,9 @@
 import { Suspense, lazy, useEffect, useState } from "react";
 import { Movie } from "../../lib/types";
 import { fetchPopularMovies } from "../../services/movies";
+import { PAGE_NUMBER } from "../../lib/constants";
 
 const MoviesList = lazy(() => import("./PopularMoviesList"));
-
-const PAGE_NUMBER = 1;
 
 const PopularMovies = () => {
   const [movies, setMovies] = useState<Movie[]>([]);
