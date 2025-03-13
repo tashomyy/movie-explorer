@@ -51,14 +51,16 @@
 }
 
 body {
-  @apply text-text-primary font-body;
+  @apply text-text-primary font-body !bg-cover;
   background: url("/light-bg.jpg") center center no-repeat;
-  background-size: cover;
+}
+
+.container {
+  @apply w-full max-w-7xl mx-auto px-4 md:px-8;
 }
 
 .dark body {
   background: url("/dark-bg.jpg") center center no-repeat;
-  background-size: cover;
 }
 
 /* for main page headings */
