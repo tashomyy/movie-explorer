@@ -51,7 +51,14 @@
 }
 
 body {
-  @apply bg-primary text-text-primary font-body;
+  @apply text-text-primary font-body;
+  background: url("/light-bg.jpg") center center no-repeat;
+  background-size: cover;
+}
+
+.dark body {
+  background: url("/dark-bg.jpg") center center no-repeat;
+  background-size: cover;
 }
 
 /* for main page headings */

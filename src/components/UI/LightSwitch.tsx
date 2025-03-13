@@ -21,7 +21,7 @@ const LightSwitch = ({ toggle, theme }: LightSwitchProps) => {
 
   return (
     <button
-      className="cursor-pointer flex items-center justify-center gap-2 bg-secondary px-4 py-1 rounded-lg hover:bg-hover-color tranisiton-color duration-300"
+      className="cursor-pointer flex items-center justify-center gap-2 bg-primary px-4 py-1 rounded-lg hover:bg-hover-color transition-color duration-300"
       onClick={toggle}
       aria-label={content.text}
     >
