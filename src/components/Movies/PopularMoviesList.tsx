@@ -8,8 +8,8 @@ import InfiniteLoader from "react-window-infinite-loader";
 import AutoSizer from "react-virtualized-auto-sizer";
 import { useMovies } from "../../hooks/useMovies";
 
-const COLUMN_COUNT = 2;
-const ITEM_HEIGHT = 400;
+const COLUMN_COUNT = 3;
+const ITEM_HEIGHT = 480;
 const MoviesComponent = () => {
   const { movies, fetchNextPage, hasMore, isLoading } = useMovies();
 
