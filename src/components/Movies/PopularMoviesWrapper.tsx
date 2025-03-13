@@ -1,7 +1,6 @@
 import { Suspense, lazy, useEffect, useState } from "react";
-import { apiClient, BASE_URL } from "../../services/apiClient";
-import { toast } from "react-toastify";
 import { Movie } from "../../lib/types";
+import { fetchPopularMovies } from "../../services/movies";
 
 const MoviesList = lazy(() => import("./PopularMoviesList"));
 
@@ -13,22 +12,11 @@ const PopularMovies = () => {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    const fetchMovies = async () => {
-      setLoading(true);
-      try {
-        const response = await apiClient.get(
-          `${BASE_URL}/movie/popular?page=${page}`
-        );
-        setMovies((prev) => [...prev, ...response.data.results]);
-      } catch (error) {
-        toast.error("Error fetching popular movies");
-        console.error("Error fetching popular movies:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchMovies();
+    setLoading(true);
+    fetchPopularMovies(page).then((data) => {
+      setMovies((prev) => [...prev, ...data.results]);
+      setLoading(false);
+    });
   }, [page]);
 
   useEffect(() => {
