@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Genre, Movie } from "../../lib/types";
 import { PAGE_NUMBER, SEARCH_TYPES, YEARS } from "../../lib/constants";
 import { fetchSearchMovies } from "../../services/movies";
-import MoviesList from "./MoviesList";
+import MoviesList from "./GridMoviesList";
 import useDebounce from "../../hooks/useDebounce";
 import { fetchGenres } from "../../services/info";
 import { SearchType } from "../../lib/enums";
@@ -79,7 +79,7 @@ const SearchMoviesList = () => {
   };
 
   return (
-    <div
+    <section
       className={`app flex flex-col bg-card rounded-lg p-4 ${
         query || selectedGenre || selectedYear
           ? "min-h-[500px] h-[70vh]"
@@ -162,7 +162,7 @@ const SearchMoviesList = () => {
           <div className="text-center my-5">Loading more movies...</div>
         )}
       </div>
-    </div>
+    </section>
   );
 };
 

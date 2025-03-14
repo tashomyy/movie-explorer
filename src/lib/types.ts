@@ -12,3 +12,9 @@ export interface Genre {
   id: number;
   name: string;
 }
+
+export type PossibleMovieLists =
+  | "popular"
+  | "trending"
+  | "upcoming"
+  | "streaming";

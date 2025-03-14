@@ -1,11 +1,16 @@
 import { Suspense, lazy, useEffect, useRef, useState } from "react";
-import { Movie } from "../../lib/types";
+import { Movie, PossibleMovieLists } from "../../lib/types";
 import { fetchPopularMovies } from "../../services/movies";
 import { PAGE_NUMBER } from "../../lib/constants";
 
-const MoviesList = lazy(() => import("./MoviesList"));
+const GridMoviesList = lazy(() => import("./GridMoviesList"));
+const HorizontalMoviesList = lazy(() => import("./HorizontalMoviesList"));
 
-const PopularMovies = () => {
+interface PopularMoviesProps {
+  type: PossibleMovieLists;
+}
+
+const PopularMovies = ({ type = "popular" }: PopularMoviesProps) => {
   const [movies, setMovies] = useState<Movie[]>([]);
   const [page, setPage] = useState(PAGE_NUMBER);
   const [loading, setLoading] = useState(false);
@@ -43,18 +48,24 @@ const PopularMovies = () => {
   }, [loading]);
 
   return (
-    <div className="app">
-      <h1 className="primary-heading text-center">Popular Movies</h1>
+    <section>
+      <h1 className="primary-heading text-center">
+        {type.toLocaleUpperCase()} Movies
+      </h1>
 
       <Suspense
         fallback={<div className="text-center my-5">Loading movies...</div>}
       >
-        <MoviesList moviesData={movies} />
+        {type === "popular" ? (
+          <GridMoviesList moviesData={movies} />
+        ) : (
+          <HorizontalMoviesList moviesData={movies} />
+        )}
       </Suspense>
       {loading && (
         <div className="text-center my-5">Loading more movies...</div>
       )}
-    </div>
+    </section>
   );
 };
 
