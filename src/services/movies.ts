@@ -2,21 +2,6 @@ import { toast } from "react-toastify";
 import { apiClient } from "./apiClient";
 import { PossibleMovieLists } from "../lib/types";
 
-export const fetchPopularMovies = async (page: number) => {
-  try {
-    const response = await apiClient.get(`/movie/popular?page=${page}`);
-    return response.data;
-  } catch (error: any) {
-    toast.error(
-      error?.response?.data?.message ||
-        "There was an error while fetching the popular movies"
-    );
-    throw new Error(
-      error?.response?.data?.message || "Failed to fetch popular movies"
-    );
-  }
-};
-
 export const fetchSearchMovies = async (
   name: string,
   page: number,
@@ -76,6 +61,21 @@ export const fetchMoviesByType = async (
     );
     throw new Error(
       error?.response?.data?.message || `Failed to fetch ${type} movies`
+    );
+  }
+};
+
+export const fetchSingleMovie = async (id: string) => {
+  try {
+    const response = await apiClient.get(`/movie/${id}`);
+    return response.data;
+  } catch (error: any) {
+    toast.error(
+      error?.response?.data?.message ||
+        `There was an error while fetching the ${id} movie`
+    );
+    throw new Error(
+      error?.response?.data?.message || `Failed to fetch ${id} movie`
     );
   }
 };

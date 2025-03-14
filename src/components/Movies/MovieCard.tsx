@@ -9,7 +9,7 @@ interface MovieCardProps {
 const MovieCard = ({ movie }: MovieCardProps) => {
   const [isLoaded, setIsLoaded] = useState(false);
   const imageUrl = movie.poster_path
-    ? `${import.meta.env.VITE_IMAGE_URL}${movie.poster_path}`
+    ? `${import.meta.env.VITE_IMAGE_URL}w500${movie.poster_path}`
     : null;
 
   return (
