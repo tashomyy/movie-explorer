@@ -52,11 +52,20 @@ export const fetchMoviesByType = async (
   type: PossibleMovieLists,
   page: number
 ) => {
-  console.log(type);
+  const today = new Date();
+  const minDate = today.toISOString().split("T")[0];
+
+  const nextMonth = new Date(today);
+  nextMonth.setMonth(today.getMonth() + 1);
+  const maxDate = nextMonth.toISOString().split("T")[0];
   const url =
     type === "popular"
       ? `/movie/popular?page=${page}`
-      : `/trending/movie/day?page=${page}`;
+      : type === "trending"
+      ? `/trending/movie/day?page=${page}`
+      : type === "upcoming"
+      ? `/discover/movie?include_adult=false&include_video=false&language=en-US&page=${page}&sort_by=popularity.desc&with_release_type=2|3&release_date.gte=${minDate}&release_date.lte=${maxDate}`
+      : "";
   try {
     const response = await apiClient.get(url);
     return response.data;
