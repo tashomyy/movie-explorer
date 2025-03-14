@@ -79,3 +79,24 @@ export const fetchSingleMovie = async (id: string) => {
     );
   }
 };
+
+export const fetchTrailer = async (id: string) => {
+  try {
+    const res = await apiClient.get(
+      `/movie/${id}/videos?api_key=YOUR_TMDB_API_KEY`
+    );
+    const officialTrailer = res.data.results.find((vid: any) =>
+      vid.name.toLowerCase().includes("trailer")
+    );
+    if (officialTrailer) return officialTrailer.key;
+    else return "";
+  } catch (error: any) {
+    toast.error(
+      error?.response?.data?.message ||
+        `There was an error while fetching the ${id} trailer`
+    );
+    throw new Error(
+      error?.response?.data?.message || `Failed to fetch ${id} trailer`
+    );
+  }
+};

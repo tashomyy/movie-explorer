@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import useScrollDetection from "../../hooks/useScrollDetection";
 import { useTheme } from "../../store/ThemeContext";
 import LightSwitch from "./LightSwitch";
@@ -18,7 +19,9 @@ const Header = ({ classNameWidth }: HeaderProps) => {
       }`}
     >
       <div className={`flex justify-between items-center ${classNameWidth}`}>
-        <h2 className="secondary-heading">Movie explorer</h2>
+        <Link to={"/"} className="secondary-heading">
+          Movie explorer
+        </Link>
         <LightSwitch toggle={toggle} theme={theme} />
       </div>
       <nav className="mx-auto">navigation bar</nav>
