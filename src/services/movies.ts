@@ -53,17 +53,20 @@ export const fetchMoviesByType = async (
   page: number
 ) => {
   console.log(type);
-  const url = `/movie/popular?page=${page}`;
+  const url =
+    type === "popular"
+      ? `/movie/popular?page=${page}`
+      : `/trending/movie/day?page=${page}`;
   try {
     const response = await apiClient.get(url);
     return response.data;
   } catch (error: any) {
     toast.error(
       error?.response?.data?.message ||
-        "There was an error while fetching the popular movies"
+        `There was an error while fetching the ${type} movies`
     );
     throw new Error(
-      error?.response?.data?.message || "Failed to fetch popular movies"
+      error?.response?.data?.message || `Failed to fetch ${type} movies`
     );
   }
 };

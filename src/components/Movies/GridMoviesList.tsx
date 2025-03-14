@@ -1,9 +1,5 @@
-import { Movie } from "../../lib/types";
+import { MoviesListProps } from "../../lib/types";
 import MovieCard from "./MovieCard";
-
-interface MoviesListProps {
-  moviesData: Movie[];
-}
 
 const GridMoviesList = ({ moviesData }: MoviesListProps) => {
   return (

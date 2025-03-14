@@ -1,11 +1,12 @@
-import PopularMoviesWrapper from "../components/Movies/PopularMovies";
+import MoviesListWrapper from "../components/Movies/MoviesListWrapper";
 import SearchMoviesList from "../components/Movies/SearchMovies";
 
 const Home = () => {
   return (
     <div className="flex flex-col gap-12">
       <SearchMoviesList />
-      <PopularMoviesWrapper />
+      <MoviesListWrapper type="trending" />
+      <MoviesListWrapper type="popular" />
     </div>
   );
 };

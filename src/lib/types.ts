@@ -18,3 +18,7 @@ export type PossibleMovieLists =
   | "trending"
   | "upcoming"
   | "streaming";
+
+export interface MoviesListProps {
+  moviesData: Movie[];
+}
