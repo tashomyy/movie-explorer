@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
 import { Genre, Movie } from "../../lib/types";
-import { PAGE_NUMBER } from "../../lib/constants";
+import { PAGE_NUMBER, SEARCH_TYPES, YEARS } from "../../lib/constants";
 import { fetchSearchMovies } from "../../services/movies";
 import MoviesList from "./MoviesList";
 import useDebounce from "../../hooks/useDebounce";
 import { fetchGenres } from "../../services/info";
+import { SearchType } from "../../lib/enums";
+import FormField from "../UI/FormField";
 
 const SearchMoviesList = () => {
   const [movies, setMovies] = useState<Movie[]>([]);
@@ -69,13 +71,6 @@ const SearchMoviesList = () => {
     }
   };
 
-  const resetFilters = () => {
-    setQuery("");
-    setSelectedGenre(null);
-    setSelectedYear(null);
-    resetData();
-  };
-
   return (
     <div
       className={`app flex flex-col bg-card rounded-lg p-4 ${
@@ -85,76 +80,59 @@ const SearchMoviesList = () => {
       }`}
     >
       <h1 className="secondary-heading text-center">👀 Movie finder 👀</h1>
-      {/* Search Type Selector */}
+
       <div className="flex justify-center my-4">
-        <select
+        <FormField
+          label="Search Type"
+          name="search-type"
+          type="select"
           value={searchType}
-          onChange={(e) => {
-            setSearchType(e.target.value as "name" | "genre" | "year");
-            resetFilters();
-          }}
-          className="border border-gray-300 rounded-md px-4 py-2"
-        >
-          <option value="name">Search by Name</option>
-          <option value="genre">Filter by Genre</option>
-          <option value="year">Filter by Year</option>
-        </select>
+          options={SEARCH_TYPES}
+          onChange={(value) => setSearchType(value as SearchType)}
+        />
       </div>
 
       {/* input fields for every filtering choice */}
       <div className="flex justify-center gap-4 mb-4">
-        {searchType === "name" && (
-          <input
+        {searchType === SearchType.Name && (
+          <FormField
+            label="Search for a movie"
+            name="search-name"
             type="text"
-            placeholder="Search for movies..."
             value={query}
-            onChange={(e) => setQuery(e.target.value)}
-            className="border border-gray-300 rounded-md px-4 py-2"
+            placeholder="Type a movie name..."
+            onChange={(value) => setQuery(value as string)}
+            onReset={() => setQuery("")}
           />
         )}
-        {searchType === "genre" && (
-          <select
-            className="border border-gray-300 rounded-md px-4 py-2"
-            value={selectedGenre || ""}
-            onChange={(e) => setSelectedGenre(e.target.value || null)}
-          >
-            <option value="">All Genres</option>
-            {genres.map((genre) => (
-              <option key={genre.id} value={genre.id}>
-                {genre.name}
-              </option>
-            ))}
-          </select>
+        {searchType === SearchType.Genre && (
+          <FormField
+            label="Select Genre"
+            name="search-genre"
+            type="select"
+            placeholder="Select a genre"
+            value={selectedGenre as string}
+            options={genres.map((g) => ({
+              value: g.id.toString(),
+              label: g.name,
+            }))}
+            onChange={(value) => setSelectedGenre((value as string) || null)}
+            onReset={() => setSelectedGenre("")}
+          />
         )}
-        {searchType === "year" && (
-          <select
-            className="border border-gray-300 rounded-md px-4 py-2"
-            value={selectedYear || ""}
-            onChange={(e) => setSelectedYear(e.target.value || null)}
-          >
-            <option value="">All Years</option>
-            {Array.from({ length: 50 }, (_, i) => {
-              const year = new Date().getFullYear() - i;
-              return (
-                <option key={year} value={year}>
-                  {year}
-                </option>
-              );
-            })}
-          </select>
+        {searchType === SearchType.Year && (
+          <FormField
+            label="Select Year"
+            name="search-genre"
+            type="select"
+            placeholder="Select a year"
+            options={YEARS}
+            value={selectedYear as string}
+            onChange={(value) => setSelectedYear((value as string) || null)}
+            onReset={() => setSelectedYear("")}
+          />
         )}
       </div>
-
-      {(query || selectedGenre || selectedYear) && (
-        <div className="flex justify-center mb-4">
-          <button
-            onClick={resetFilters}
-            className="bg-red-500 text-white px-4 py-2 rounded-md"
-          >
-            Reset All
-          </button>
-        </div>
-      )}
 
       <div
         className={`flex-1 overflow-y-auto px-4 transition-[opacity] duration-300 flex-col ${
