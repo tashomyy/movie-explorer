@@ -59,6 +59,10 @@ body {
   @apply w-full max-w-7xl mx-auto px-4 md:px-8;
 }
 
+.nav-item {
+  @apply text-text-primary font-body relative transition-all duration-300 cursor-pointer;
+}
+
 .dark body {
   background: url("/dark-bg.jpg") center center no-repeat;
 }

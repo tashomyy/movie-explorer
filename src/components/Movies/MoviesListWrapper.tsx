@@ -28,7 +28,7 @@ const PopularMovies = ({ type = "popular" }: PopularMoviesProps) => {
   }, [type, loadMore]);
 
   return (
-    <section>
+    <section id={`${type}-section`}>
       <h1 className="primary-heading text-center">
         {type.toUpperCase()} Movies
       </h1>

@@ -25,3 +25,9 @@ export type PossibleMovieLists =
 export interface MoviesListProps {
   moviesData: Movie[];
 }
+export interface NavItem {
+  name: string;
+  scrollTo?: string;
+  path: string;
+  isLink?: boolean;
+}
