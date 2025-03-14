@@ -65,7 +65,7 @@ export const fetchMoviesByType = async (
       ? `/trending/movie/day?page=${page}`
       : type === "upcoming"
       ? `/discover/movie?include_adult=false&include_video=false&language=en-US&page=${page}&sort_by=popularity.desc&with_release_type=2|3&release_date.gte=${minDate}&release_date.lte=${maxDate}`
-      : "";
+      : `/movie/now_playing?page=${page}`;
   try {
     const response = await apiClient.get(url);
     return response.data;
