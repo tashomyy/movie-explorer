@@ -1,5 +1,5 @@
-import PopularMoviesWrapper from "../components/Movies/PopularMoviesWrapper";
-import SearchMoviesList from "../components/Movies/SearchMoviesList";
+import PopularMoviesWrapper from "../components/Movies/PopularMovies";
+import SearchMoviesList from "../components/Movies/SearchMovies";
 
 const Home = () => {
   return (

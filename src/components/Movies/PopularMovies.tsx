@@ -3,7 +3,7 @@ import { Movie } from "../../lib/types";
 import { fetchPopularMovies } from "../../services/movies";
 import { PAGE_NUMBER } from "../../lib/constants";
 
-const MoviesList = lazy(() => import("./PopularMoviesList"));
+const MoviesList = lazy(() => import("./MoviesList"));
 
 const PopularMovies = () => {
   const [movies, setMovies] = useState<Movie[]>([]);
