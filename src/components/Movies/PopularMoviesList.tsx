@@ -8,7 +8,7 @@ interface MoviesListProps {
 const MoviesList = ({ moviesData }: MoviesListProps) => {
   return (
     <div className="mx-auto w-full my-5 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-      {moviesData.map((movie, index) => {
+      {moviesData?.map((movie, index) => {
         return <MovieCard key={index} movie={movie} />;
       })}
     </div>

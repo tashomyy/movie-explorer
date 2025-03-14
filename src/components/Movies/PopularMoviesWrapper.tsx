@@ -1,4 +1,4 @@
-import { Suspense, lazy, useEffect, useState } from "react";
+import { Suspense, lazy, useEffect, useRef, useState } from "react";
 import { Movie } from "../../lib/types";
 import { fetchPopularMovies } from "../../services/movies";
 import { PAGE_NUMBER } from "../../lib/constants";
@@ -10,7 +10,15 @@ const PopularMovies = () => {
   const [page, setPage] = useState(PAGE_NUMBER);
   const [loading, setLoading] = useState(false);
 
+  // strict mode was fetching the first page twice, this is the workaround for dev env - it won't make any difference for prod, it was just bugging me seeing double movies
+  const isFirstRender = useRef(true);
+
   useEffect(() => {
+    if (isFirstRender.current) {
+      isFirstRender.current = false;
+      return; // skip the first render in strict mode
+    }
+
     setLoading(true);
     fetchPopularMovies(page).then((data) => {
       setMovies((prev) => [...prev, ...data.results]);
