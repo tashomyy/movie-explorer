@@ -1,5 +1,6 @@
 import React from "react";
-import { ChevronDownIcon, XMarkIcon } from "@heroicons/react/24/solid";
+import { ChevronDownIcon } from "@heroicons/react/24/solid";
+import ResetButton from "./ResetButton";
 
 interface FormFieldProps {
   label: string;
@@ -29,24 +30,17 @@ const FormField: React.FC<FormFieldProps> = ({
       <label className="text-primary-text font-medium">{label}</label>
 
       {type === "text" && (
-        <div className="flex items-center space-x-2">
+        <div className="relative w-full group">
           <input
             type="text"
             name={name}
             value={value as string}
             placeholder={placeholder}
             onChange={(e) => onChange(e.target.value)}
-            className="w-full bg-transparent placeholder:text-slate-400 text-primary-text text-sm border border-slate-200 rounded-md px-3 py-2 transition duration-300 ease focus:outline-none focus:border-blue-500 hover:border-blue-300 shadow-sm focus:shadow"
+            className="w-full bg-transparent placeholder:text-slate-400 text-primary-text text-sm border border-slate-200 rounded-md px-3 py-2 transition duration-300 ease focus:outline-none focus:border-blue-500 hover:border-blue-300 shadow-sm focus:shadow pr-8"
           />
-          {onReset && value && (
-            <button
-              type="button"
-              onClick={onReset}
-              className="px-3 py-1 text-white bg-red-400 rounded-md hover:bg-red-500 transition-colors"
-            >
-              Reset
-            </button>
-          )}
+
+          {onReset && value && <ResetButton onReset={onReset} />}
         </div>
       )}
 
@@ -73,16 +67,7 @@ const FormField: React.FC<FormFieldProps> = ({
           </select>
 
           {/* only visible on hover if onReset exists */}
-          {onReset && value && (
-            <button
-              type="button"
-              onClick={() => onReset()}
-              className="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-red-500 transition-opacity z-10
-                   opacity-100 md:opacity-0 md:group-hover:opacity-100 cursor-pointer"
-            >
-              <XMarkIcon className="stroke-current h-4 w-4" />
-            </button>
-          )}
+          {onReset && value && <ResetButton onReset={onReset} />}
 
           {/* hidden on hover if onReset exists - always hidden on mobile if onReset exists */}
           <span

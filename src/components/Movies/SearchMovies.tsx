@@ -71,6 +71,13 @@ const SearchMoviesList = () => {
     }
   };
 
+  const resetFilters = () => {
+    setQuery("");
+    setSelectedGenre("");
+    setSelectedYear("");
+    resetData();
+  };
+
   return (
     <div
       className={`app flex flex-col bg-card rounded-lg p-4 ${
@@ -102,7 +109,7 @@ const SearchMoviesList = () => {
             value={query}
             placeholder="Type a movie name..."
             onChange={(value) => setQuery(value as string)}
-            onReset={() => setQuery("")}
+            onReset={() => resetFilters()}
           />
         )}
         {searchType === SearchType.Genre && (
@@ -117,7 +124,7 @@ const SearchMoviesList = () => {
               label: g.name,
             }))}
             onChange={(value) => setSelectedGenre((value as string) || null)}
-            onReset={() => setSelectedGenre("")}
+            onReset={() => resetFilters()}
           />
         )}
         {searchType === SearchType.Year && (
@@ -129,7 +136,7 @@ const SearchMoviesList = () => {
             options={YEARS}
             value={selectedYear as string}
             onChange={(value) => setSelectedYear((value as string) || null)}
-            onReset={() => setSelectedYear("")}
+            onReset={() => resetFilters()}
           />
         )}
       </div>
