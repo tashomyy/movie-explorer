@@ -16,7 +16,7 @@ const MovieCard = ({ movie }: MovieCardProps) => {
   return (
     <Link
       to={`/movie/${movie?.id}`}
-      className="relative flex flex-col my-6 bg-white dark:bg-secondary shadow-sm border border-slate-200 rounded-lg min-w-[350px] h-full"
+      className="relative flex flex-col my-6 bg-white dark:bg-secondary shadow-sm border border-slate-200 rounded-lg min-w-[350px] w-full max-w-[450px]"
     >
       <div className="relative p-2.5 h-120 overflow-hidden rounded-xl bg-clip-border">
         {imageUrl ? (

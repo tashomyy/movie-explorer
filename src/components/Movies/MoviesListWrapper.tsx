@@ -44,9 +44,7 @@ const PopularMovies = ({
           <HorizontalMoviesList moviesData={movies} loadMore={loadMore} />
         )}
       </Suspense>
-      {loading && (
-        <div className="text-center my-5">Loading more movies...</div>
-      )}
+      {loading && <Loader />}
     </section>
   );
 };

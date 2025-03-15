@@ -86,7 +86,7 @@ const SearchMoviesList = () => {
   return (
     <section
       id="movie-finder-section"
-      className={`app flex flex-col bg-card rounded-lg p-8 border border-slate-200 ${
+      className={`app flex flex-col bg-card rounded-lg py-8 px-2 sm:px-8 border border-slate-200 ${
         query || selectedGenre || selectedYear
           ? "min-h-[500px] h-[70vh]"
           : "h-max"
