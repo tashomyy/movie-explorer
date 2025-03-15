@@ -12,12 +12,12 @@ export const fetchSearchMovies = async (
     const params = new URLSearchParams();
     params.append("page", page.toString());
 
-    let endpoint = "/search/movie"; // Default endpoint for name search
+    let endpoint = "/search/movie";
 
     if (name) {
       params.append("query", name);
     } else if (selectedGenre || selectedYear) {
-      endpoint = "/discover/movie"; // Use discover for filtering
+      endpoint = "/discover/movie";
       if (selectedGenre) params.append("with_genres", selectedGenre);
       if (selectedYear) params.append("primary_release_year", selectedYear);
     }
@@ -25,11 +25,11 @@ export const fetchSearchMovies = async (
     const response = await apiClient.get(`${endpoint}?${params.toString()}`);
     return response.data;
   } catch (error: any) {
-    toast.error(
+    const errorMessage =
       error?.response?.data?.message ||
-        "There was an error while fetching movies"
-    );
-    throw new Error(error?.response?.data?.message || "Failed to fetch movies");
+      `There was an error while fetching movies`;
+    toast.error(errorMessage);
+    throw new Error(errorMessage);
   }
 };
 
@@ -55,13 +55,11 @@ export const fetchMoviesByType = async (
     const response = await apiClient.get(url);
     return response.data;
   } catch (error: any) {
-    toast.error(
+    const errorMessage =
       error?.response?.data?.message ||
-        `There was an error while fetching the ${type} movies`
-    );
-    throw new Error(
-      error?.response?.data?.message || `Failed to fetch ${type} movies`
-    );
+      `There was an error while fetching the ${type} movies`;
+    toast.error(errorMessage);
+    throw new Error(errorMessage);
   }
 };
 
@@ -72,13 +70,11 @@ export const fetchSingleMovie = async (id: string) => {
     );
     return response.data;
   } catch (error: any) {
-    toast.error(
+    const errorMessage =
       error?.response?.data?.message ||
-        `There was an error while fetching the ${id} movie`
-    );
-    throw new Error(
-      error?.response?.data?.message || `Failed to fetch ${id} movie`
-    );
+      `There was an error while fetching the ${id} movie`;
+    toast.error(errorMessage);
+    throw new Error(errorMessage);
   }
 };
 
@@ -93,12 +89,23 @@ export const fetchTrailer = async (id: string) => {
     if (officialTrailer) return officialTrailer.key;
     else return "";
   } catch (error: any) {
-    toast.error(
+    const errorMessage =
       error?.response?.data?.message ||
-        `There was an error while fetching the ${id} trailer`
-    );
-    throw new Error(
-      error?.response?.data?.message || `Failed to fetch ${id} trailer`
-    );
+      `There was an error while fetching the ${id} trailer`;
+    toast.error(errorMessage);
+    throw new Error(errorMessage);
+  }
+};
+
+export const fetchMovieProviders = async (id: string) => {
+  try {
+    const { data } = await apiClient.get(`/movie/${id}/watch/providers`);
+    return data.results;
+  } catch (error: any) {
+    const errorMessage =
+      error?.response?.data?.message ||
+      `Failed to fetch providers for movie ID: ${id}`;
+    toast.error(errorMessage);
+    throw new Error(errorMessage);
   }
 };

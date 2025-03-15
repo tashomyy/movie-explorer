@@ -1,5 +1,10 @@
 import { MovieSectionType } from "./enums";
 
+export interface WatchProvider {
+  provider_name: string;
+  logo_path: string;
+}
+
 export interface Movie {
   id: string;
   title: string;
@@ -10,6 +15,7 @@ export interface Movie {
   genre_ids: number[];
   backdrop_path: string;
   credits: { cast: { name: string }[]; crew: { name: string; job: string }[] };
+  providers?: WatchProvider[];
 }
 
 export interface Genre {

@@ -3,8 +3,7 @@ import { useMovieLists } from "../store/MoviesListContext";
 import GridMoviesList from "../components/Movies/GridMoviesList";
 
 const ListsPage = () => {
-  const { watchlist, favorites, removeFromWatchlist, removeFromFavorites } =
-    useMovieLists();
+  const { watchlist, favorites } = useMovieLists();
 
   return (
     <div className="max-w-7xl mx-auto flex flex-col gap-12 lg:gap-28">
