@@ -1,6 +1,6 @@
-import { toast } from "react-toastify";
 import { apiClient } from "./apiClient";
 import { PossibleMovieLists } from "../lib/types";
+import { handleError } from "../lib/errorUtils";
 
 export const fetchSearchMovies = async (
   name: string,
@@ -25,11 +25,7 @@ export const fetchSearchMovies = async (
     const response = await apiClient.get(`${endpoint}?${params.toString()}`);
     return response.data;
   } catch (error: any) {
-    const errorMessage =
-      error?.response?.data?.message ||
-      `There was an error while fetching movies`;
-    toast.error(errorMessage);
-    throw new Error(errorMessage);
+    handleError(error, `There was an error while fetching movies`);
   }
 };
 
@@ -55,11 +51,7 @@ export const fetchMoviesByType = async (
     const response = await apiClient.get(url);
     return response.data;
   } catch (error: any) {
-    const errorMessage =
-      error?.response?.data?.message ||
-      `There was an error while fetching the ${type} movies`;
-    toast.error(errorMessage);
-    throw new Error(errorMessage);
+    handleError(error, `There was an error while fetching the ${type} movies`);
   }
 };
 
@@ -70,30 +62,20 @@ export const fetchSingleMovie = async (id: string) => {
     );
     return response.data;
   } catch (error: any) {
-    const errorMessage =
-      error?.response?.data?.message ||
-      `There was an error while fetching the ${id} movie`;
-    toast.error(errorMessage);
-    throw new Error(errorMessage);
+    handleError(error, `There was an error while fetching the ${id} movie`);
   }
 };
 
 export const fetchTrailer = async (id: string) => {
   try {
-    const res = await apiClient.get(
-      `/movie/${id}/videos?api_key=YOUR_TMDB_API_KEY`
-    );
+    const res = await apiClient.get(`/movie/${id}/videos`);
     const officialTrailer = res.data.results.find((vid: any) =>
       vid.name.toLowerCase().includes("trailer")
     );
     if (officialTrailer) return officialTrailer.key;
     else return "";
   } catch (error: any) {
-    const errorMessage =
-      error?.response?.data?.message ||
-      `There was an error while fetching the ${id} trailer`;
-    toast.error(errorMessage);
-    throw new Error(errorMessage);
+    handleError(error, `There was an error while fetching the ${id} trailer`);
   }
 };
 
@@ -102,10 +84,6 @@ export const fetchMovieProviders = async (id: string) => {
     const { data } = await apiClient.get(`/movie/${id}/watch/providers`);
     return data.results;
   } catch (error: any) {
-    const errorMessage =
-      error?.response?.data?.message ||
-      `Failed to fetch providers for movie ID: ${id}`;
-    toast.error(errorMessage);
-    throw new Error(errorMessage);
+    handleError(error, `Failed to fetch providers for movie ID: ${id}`);
   }
 };
