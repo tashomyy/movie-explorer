@@ -2,7 +2,7 @@ export function scrollToElement(elem: string): void {
   const downloadElement = document.getElementById(elem);
   if (downloadElement) {
     const scrollOptions: ScrollToOptions = {
-      top: downloadElement.offsetTop - 140,
+      top: downloadElement.offsetTop - 200,
       behavior: "smooth",
     };
     window.scrollTo(scrollOptions);
