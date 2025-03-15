@@ -11,7 +11,7 @@ interface PopularMoviesProps {
   type: PossibleMovieLists;
 }
 
-const PopularMovies = ({
+const MoviesListWrapper = ({
   type = MovieSectionType.Popular,
 }: PopularMoviesProps) => {
   const { movies, loading, loadMore } = useInfiniteMovies(type);
@@ -33,7 +33,7 @@ const PopularMovies = ({
 
   return (
     <section id={`${type}-section`}>
-      <h1 className="primary-heading text-center">
+      <h1 className="primary-heading text-center mb-8">
         {type.toUpperCase()} MOVIES
       </h1>
 
@@ -49,4 +49,4 @@ const PopularMovies = ({
   );
 };
 
-export default PopularMovies;
+export default MoviesListWrapper;

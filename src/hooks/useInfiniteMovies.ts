@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { Movie, PossibleMovieLists } from "../lib/types";
 import { PAGE_NUMBER } from "../lib/constants";
 import { fetchMoviesByType } from "../services/movies";
+import { useErrorBoundary } from "react-error-boundary";
 
 interface MovieState {
   [key: string]: { movies: Movie[]; page: number; lastFetchedPage: number };
@@ -10,6 +11,7 @@ interface MovieState {
 const useInfiniteMovies = (type: PossibleMovieLists) => {
   const [movieData, setMovieData] = useState<MovieState>({});
   const [loading, setLoading] = useState(false);
+  const { showBoundary } = useErrorBoundary();
 
   useEffect(() => {
     if (!movieData[type]) {
@@ -41,7 +43,12 @@ const useInfiniteMovies = (type: PossibleMovieLists) => {
         }));
         setLoading(false);
       })
-      .catch(() => setLoading(false));
+      .catch((error) => {
+        setLoading(false);
+        showBoundary(
+          new Error(`Failed to fetch movies for type ${type}: ${error.message}`)
+        );
+      });
   }, [type, movieData[type]?.page]);
 
   const loadMore = () => {

@@ -8,12 +8,14 @@ import { fetchGenres } from "../../services/info";
 import { SearchType } from "../../lib/enums";
 import FormField from "../UI/FormField";
 import Loader from "../UI/Loader";
+import { useErrorBoundary } from "react-error-boundary";
 
 const SearchMoviesList = () => {
   const [movies, setMovies] = useState<Movie[]>([]);
   const [page, setPage] = useState(PAGE_NUMBER);
   const [loading, setLoading] = useState(false);
   const [empty, setEmpty] = useState(false);
+  const { showBoundary } = useErrorBoundary();
 
   const [searchType, setSearchType] = useState<"name" | "genre" | "year">(
     "name"
@@ -64,6 +66,7 @@ const SearchMoviesList = () => {
       })
       .catch(() => {
         setLoading(false);
+        showBoundary(new Error(`Failed to fetch search movies`));
       });
   }, [debouncedQuery, page, selectedGenre, selectedYear]);
 
