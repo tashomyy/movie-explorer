@@ -48,8 +48,8 @@ const MovieCard = ({ movie }: MovieCardProps) => {
             {movie.vote_average?.toFixed(1)} ⭐
           </p>
         </div>
-        <p className="text-slate-600 leading-normal font-light">
-          {movie?.overview.slice(0, 100) || ""}
+        <p className="text-slate-600 leading-normal font-light line-clamp-3">
+          {movie?.overview || ""}...
         </p>
         <div
           className="w-max ml-auto flex justify-between items-center gap-2 p-2 bg-gradient-to-t from-white via-white/80 to-transparent"
