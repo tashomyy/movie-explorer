@@ -1,6 +1,7 @@
 import { Outlet } from "react-router-dom";
 import Header from "./Header";
 import ScrollTop from "./ScrollTop";
+import ButtonScrollTop from "./ButtonScrollTop";
 
 const Layout = () => {
   return (
@@ -11,6 +12,7 @@ const Layout = () => {
       </main>
       <footer className="mt-auto">My App Footer</footer>
       <ScrollTop />
+      <ButtonScrollTop />
     </div>
   );
 };
