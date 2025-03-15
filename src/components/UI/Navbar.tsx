@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { NAV_LINKS } from "../../lib/constants";
 import { handleNavigationScroll } from "../../lib/helpers";
 import { NavItem } from "../../lib/types";
+import HeaderSettings from "./HeaderSettings";
+import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/solid";
 
 const Navbar = () => {
   const navigate = useNavigate();
@@ -30,8 +32,10 @@ const Navbar = () => {
   ) => {
     return isLink ? (
       <li key={index}>
-        <Link
-          className="nav-item"
+        <NavLink
+          className={({ isActive }) =>
+            isActive ? "nav-item !text-accent" : "nav-item"
+          }
           onClick={(e) => {
             e.preventDefault();
             handleNavClick(undefined, path, true);
@@ -39,11 +43,14 @@ const Navbar = () => {
           to={path}
         >
           {name.toUpperCase()}
-        </Link>
+        </NavLink>
       </li>
     ) : (
       <li key={index}>
-        <button className="nav-item" onClick={() => handleNavClick(scrollTo)}>
+        <button
+          className="nav-item-subpage"
+          onClick={() => handleNavClick(scrollTo)}
+        >
           {name.toUpperCase()}
         </button>
       </li>
@@ -56,17 +63,17 @@ const Navbar = () => {
         <button
           type="button"
           onClick={toggleMenu}
-          className="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg lg:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600 ml-auto"
+          className="inline-flex items-center p-1 w-10 h-10 justify-center text-sm transition-all duration-300 cursor-pointer text-text-primary rounded-lg lg:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-accent dark:hover:bg-gray-700 ml-auto"
           aria-controls="navbar-default"
           aria-expanded={isMenuOpen}
         >
           <span className="sr-only">Open main menu</span>
-          <img src="/hamburger-menu.svg" alt="Mobile menu" />
+          <Bars3Icon className="h-10 w-10 stroke-current" />
         </button>
 
         {/* desktop */}
         <div className="hidden w-full lg:block" id="navbar-default">
-          <ul className="flex flex-col mt-4 border border-gray-100 lg:flex-row lg:justify-between lg:gap-8 rtl:space-x-reverse lg:mt-0 lg:border-0">
+          <ul className="flex flex-col border border-gray-100 lg:flex-row lg:justify-between lg:items-center lg:gap-8 lg:border-0">
             {NAV_LINKS.map(renderNavItem)}
           </ul>
         </div>
@@ -82,20 +89,22 @@ const Navbar = () => {
 
             {/* menu */}
             <div
-              className={`overflow-y-auto fixed top-0 z-50 right-0 h-full w-[360px] bg-primary transform transition-all duration-300 ease-in-out lg:hidden ${
+              className={`overflow-y-auto fixed top-0 z-50 right-0 h-full min-w-[320px] w-1/2 bg-primary transform transition-all duration-300 ease-in-out lg:hidden pt-6 flex flex-col ${
                 isMenuOpen ? "translate-x-0" : "translate-x-[360px]"
               }`}
             >
               <button
                 type="button"
                 onClick={() => setIsMenuOpen(false)}
-                className="absolute top-4 right-4 text-gray-500 hover:text-gray-700 focus:outline-none"
+                className="inline-flex items-center p-1 w-10 h-10 justify-center text-sm transition-all duration-300 cursor-pointer text-text-primary rounded-lg lg:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-accent dark:hover:bg-gray-700 ml-auto mr-12"
               >
-                <span className="sr-only">Close menu</span>✕
+                <span className="sr-only">Close menu</span>
+                <XMarkIcon className="h-10 w-10 stroke-current" />
               </button>
               <ul className="flex flex-col p-4 space-y-4">
                 {NAV_LINKS.map(renderNavItem)}
               </ul>
+              <HeaderSettings className="flex flex-col lg:hidden items-start ps-4" />
             </div>
           </>
         )}

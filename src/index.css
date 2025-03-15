@@ -60,7 +60,11 @@ body {
 }
 
 .nav-item {
-  @apply text-text-primary text-xl font-bold font-body relative transition-all duration-300 cursor-pointer;
+  @apply text-text-primary text-xl font-bold font-body relative transition-all duration-300 cursor-pointer hover:text-accent/80 block py-4;
+}
+
+.nav-item-subpage {
+  @apply text-text-primary text-lg  font-body relative transition-all duration-300 cursor-pointer hover:text-accent/80 block;
 }
 
 .dark body {
