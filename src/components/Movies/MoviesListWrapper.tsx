@@ -34,7 +34,7 @@ const PopularMovies = ({
   return (
     <section id={`${type}-section`}>
       <h1 className="primary-heading text-center">
-        {type.toUpperCase()} Movies
+        {type.toUpperCase()} MOVIES
       </h1>
 
       <Suspense fallback={<Loader />}>

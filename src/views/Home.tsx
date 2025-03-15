@@ -4,7 +4,7 @@ import { MovieSectionType } from "../lib/enums";
 
 const Home = () => {
   return (
-    <div className="flex flex-col gap-12">
+    <div className="flex flex-col gap-12 lg:gap-28">
       <SearchMoviesList />
       <MoviesListWrapper type={MovieSectionType.Streaming} />
       <MoviesListWrapper type={MovieSectionType.Upcoming} />
