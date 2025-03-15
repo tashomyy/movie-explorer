@@ -37,7 +37,7 @@ const FormField: React.FC<FormFieldProps> = ({
             value={value as string}
             placeholder={placeholder}
             onChange={(e) => onChange(e.target.value)}
-            className="w-full bg-transparent placeholder:text-slate-400 text-primary-text text-sm border border-slate-200 rounded-md px-3 py-2 transition duration-300 ease focus:outline-none focus:border-blue-500 hover:border-blue-300 shadow-sm focus:shadow pr-8"
+            className="w-full bg-transparent placeholder:text-black dark:placeholder:text-white text-primary-text text-sm border border-slate-200 rounded-md px-3 py-2 transition duration-300 ease focus:outline-none focus:border-blue-500 hover:border-blue-300 shadow-sm focus:shadow pr-8"
           />
 
           {onReset && value && <ResetButton onReset={onReset} />}
@@ -54,7 +54,11 @@ const FormField: React.FC<FormFieldProps> = ({
                 : ""
             }
             onChange={(e) => onChange(e.target.value)}
-            className="w-full bg-transparent placeholder:text-slate-400 text-primary-text text-sm border border-slate-200 rounded-md px-3 py-2 transition duration-300 ease focus:outline-none focus:border-blue-500 hover:border-blue-300 shadow-sm focus:shadow appearance-none pr-8 cursor-pointer"
+            className="w-full bg-transparent
+            text-primary-text text-sm border border-slate-200 dark:bg-card 
+            rounded-md px-3 py-2 transition duration-300 ease 
+            focus:outline-none focus:border-accent 
+            hover:border-accent shadow-sm focus:shadow appearance-none pr-8 cursor-pointer"
           >
             <option value="" disabled>
               {placeholder || "Select an option"}
@@ -80,36 +84,6 @@ const FormField: React.FC<FormFieldProps> = ({
           >
             <ChevronDownIcon className="stroke-current w-4 h-4" />
           </span>
-        </div>
-      )}
-
-      {type === "checkbox" && (
-        <div className="flex items-center space-x-2">
-          <input
-            type="checkbox"
-            checked={value as boolean}
-            onChange={(e) => onChange(e.target.checked)}
-            className="w-4 h-4 text-blue-500 border-gray-300 rounded"
-          />
-          <span>{label}</span>
-        </div>
-      )}
-
-      {type === "radio" && options && (
-        <div className="flex flex-col space-y-1">
-          {options.map((option) => (
-            <label key={option.value} className="flex items-center space-x-2">
-              <input
-                type="radio"
-                name={name}
-                value={option.value}
-                checked={value === option.value}
-                onChange={() => onChange(option.value)}
-                className="w-4 h-4 text-blue-500 border-gray-300 rounded"
-              />
-              <span>{option.label}</span>
-            </label>
-          ))}
         </div>
       )}
     </div>

@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Genre, Movie } from "../../lib/types";
 import { PAGE_NUMBER, SEARCH_TYPES, YEARS } from "../../lib/constants";
 import { fetchSearchMovies } from "../../services/movies";
-import MoviesList from "./GridMoviesList";
+import GridMoviesList from "./GridMoviesList";
 import useDebounce from "../../hooks/useDebounce";
 import { fetchGenres } from "../../services/info";
 import { SearchType } from "../../lib/enums";
@@ -153,7 +153,7 @@ const SearchMoviesList = () => {
       >
         {query || selectedGenre || selectedYear ? (
           movies.length > 0 ? (
-            <MoviesList moviesData={movies} />
+            <GridMoviesList moviesData={movies} />
           ) : query && empty ? (
             <h1 className="text-center my-auto primary-heading">
               Ooops.. Looks like we can't find what you are looking for
