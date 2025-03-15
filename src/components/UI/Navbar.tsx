@@ -88,7 +88,7 @@ const Navbar = () => {
               <button
                 type="button"
                 onClick={() => setIsMenuOpen(false)}
-                className="inline-flex items-center p-1 w-10 h-10 justify-center text-sm transition-all duration-300 cursor-pointer text-text-primary rounded-lg lg:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-accent dark:hover:bg-gray-700 ml-auto mr-12"
+                className="inline-flex items-center p-1 w-10 h-10 justify-center text-sm transition-all duration-300 cursor-pointer text-text-primary rounded-lg lg:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-accent dark:hover:bg-gray-700 ml-auto mr-4 sm:mr-8"
               >
                 <span className="sr-only">Close menu</span>
                 <XMarkIcon className="h-10 w-10 stroke-current" />

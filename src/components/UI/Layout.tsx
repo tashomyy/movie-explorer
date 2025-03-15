@@ -4,7 +4,7 @@ import ScrollTop from "./ScrollTop";
 
 const Layout = () => {
   return (
-    <div className="min-h-screen flex flex-col gap-8 w-full">
+    <div className="min-h-screen flex flex-col gap-12 lg:gap-28 w-full">
       <Header classNameWidth="container" />
       <main className="h-full container">
         <Outlet />
