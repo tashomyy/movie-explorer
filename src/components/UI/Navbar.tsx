@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { NAV_LINKS } from "../../lib/constants";
 import { handleNavigationScroll } from "../../lib/helpers";
@@ -9,14 +9,6 @@ import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/solid";
 const Navbar = () => {
   const navigate = useNavigate();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-
-  useEffect(() => {
-    if (isMenuOpen) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "";
-    }
-  }, [isMenuOpen]);
 
   const handleNavClick = (scrollTo?: string, path?: string, isLink = false) => {
     if (scrollTo) handleNavigationScroll(scrollTo, navigate);
