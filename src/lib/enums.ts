@@ -7,3 +7,9 @@ export enum SearchType {
   Genre = "genre",
   Year = "year",
 }
+export enum MovieSectionType {
+  Popular = "popular",
+  Trending = "trending",
+  Streaming = "streaming",
+  Upcoming = "upcoming",
+}

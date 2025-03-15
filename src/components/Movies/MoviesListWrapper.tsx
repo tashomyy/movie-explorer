@@ -1,6 +1,7 @@
 import { Suspense, lazy, useEffect } from "react";
 import { PossibleMovieLists } from "../../lib/types";
 import useInfiniteMovies from "../../hooks/useInfiniteMovies";
+import { MovieSectionType } from "../../lib/enums";
 
 const GridMoviesList = lazy(() => import("./GridMoviesList"));
 const HorizontalMoviesList = lazy(() => import("./HorizontalMoviesList"));
@@ -9,11 +10,13 @@ interface PopularMoviesProps {
   type: PossibleMovieLists;
 }
 
-const PopularMovies = ({ type = "popular" }: PopularMoviesProps) => {
+const PopularMovies = ({
+  type = MovieSectionType.Popular,
+}: PopularMoviesProps) => {
   const { movies, loading, loadMore } = useInfiniteMovies(type);
 
   useEffect(() => {
-    if (type === "popular") {
+    if (type === MovieSectionType.Popular) {
       const handleScroll = () => {
         if (
           window.innerHeight + window.scrollY >=
@@ -36,7 +39,7 @@ const PopularMovies = ({ type = "popular" }: PopularMoviesProps) => {
       <Suspense
         fallback={<div className="text-center my-5">Loading movies...</div>}
       >
-        {type === "popular" ? (
+        {type === MovieSectionType.Popular ? (
           <GridMoviesList moviesData={movies} />
         ) : (
           <HorizontalMoviesList moviesData={movies} loadMore={loadMore} />

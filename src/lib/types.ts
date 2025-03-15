@@ -1,3 +1,5 @@
+import { MovieSectionType } from "./enums";
+
 export interface Movie {
   id: string;
   title: string;
@@ -17,10 +19,10 @@ export interface Genre {
 }
 
 export type PossibleMovieLists =
-  | "popular"
-  | "trending"
-  | "upcoming"
-  | "streaming";
+  | MovieSectionType.Popular
+  | MovieSectionType.Trending
+  | MovieSectionType.Upcoming
+  | MovieSectionType.Streaming;
 
 export interface MoviesListProps {
   moviesData: Movie[];
