@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { fetchSingleMovie, fetchTrailer } from "../../services/movies";
 import { toast } from "react-toastify";
 import { Movie } from "../../lib/types";
+import { AddToFavoritesButton, AddToWatchlistButton } from "./MovesListButtons";
 
 const SingleMovie = () => {
   const { id } = useParams();
@@ -79,10 +80,6 @@ const SingleMovie = () => {
             </h1>
 
             <p className="text-primary-text  text-lg ">{movie?.overview}</p>
-
-            <div className="flex items-center gap-2 text-yellow-400 font-bold text-xl">
-              ⭐ {movie?.vote_average?.toFixed(1)} / 10
-            </div>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-12">
@@ -119,7 +116,7 @@ const SingleMovie = () => {
                 </button>
               </div>
             </div>
-            <div className="text-primary-text  text-lg">
+            <div className="text-primary-text text-lg flex flex-col gap-2">
               <p>
                 <span className="font-bold">Director:</span>{" "}
                 {movie?.director || "N/A"}
@@ -128,6 +125,17 @@ const SingleMovie = () => {
                 <span className="font-bold">Starring:</span>{" "}
                 {movie?.cast?.slice(0, 5).join(", ") || "N/A"}
               </p>
+              <div className="flex flex-wrap gap-4">
+                {movie && (
+                  <>
+                    <AddToWatchlistButton movie={movie} />
+                    <AddToFavoritesButton movie={movie} />
+                  </>
+                )}
+                <div className="flex items-center gap-2 text-yellow-400 font-bold text-xl">
+                  ⭐ {movie?.vote_average?.toFixed(1)} / 10
+                </div>
+              </div>
             </div>
           </div>
         </div>
