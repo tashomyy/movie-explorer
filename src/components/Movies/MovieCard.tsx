@@ -14,7 +14,10 @@ const MovieCard = ({ movie }: MovieCardProps) => {
     : null;
 
   return (
-    <div className="relative flex flex-col my-6 bg-white shadow-sm border border-slate-200 rounded-lg min-w-[350px]">
+    <Link
+      to={`/movie/${movie?.id}`}
+      className="relative flex flex-col my-6 bg-white shadow-sm border border-slate-200 rounded-lg min-w-[350px]"
+    >
       <div className="relative p-2.5 h-120 overflow-hidden rounded-xl bg-clip-border">
         {imageUrl ? (
           <img
@@ -48,12 +51,15 @@ const MovieCard = ({ movie }: MovieCardProps) => {
         <p className="text-slate-600 leading-normal font-light">
           {movie?.overview.slice(0, 100) || ""}
         </p>
-        <div className="w-full flex justify-between items-center gap-2 p-2 bg-gradient-to-t from-white via-white/80 to-transparent">
+        <div
+          className="w-max ml-auto flex justify-between items-center gap-2 p-2 bg-gradient-to-t from-white via-white/80 to-transparent"
+          onClick={(e) => e.preventDefault()}
+        >
           <AddToWatchlistButton movie={movie} />
           <AddToFavoritesButton movie={movie} />
         </div>
       </div>
-    </div>
+    </Link>
   );
 };
 

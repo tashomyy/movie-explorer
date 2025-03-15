@@ -69,11 +69,11 @@ body {
 
 /* icons for action buttons */
 .active-icon {
-  @apply w-7 h-7 text-white transition-all duration-200;
+  @apply w-7 h-7 text-white transition-all duration-200 pointer-events-none;
 }
 
 .inactive-icon {
-  @apply w-7 h-7 stroke-current text-text-primary transition-all duration-200;
+  @apply w-7 h-7 stroke-current text-text-primary transition-all duration-200 pointer-events-none;
 }
 
 .inactive-bg {
