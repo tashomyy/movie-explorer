@@ -1,6 +1,7 @@
 import { apiClient } from "./apiClient";
 import { PossibleMovieLists } from "../lib/types";
 import { handleError } from "../lib/errorUtils";
+import { MovieSectionType } from "../lib/enums";
 
 export const fetchSearchMovies = async (
   name: string,
@@ -40,11 +41,11 @@ export const fetchMoviesByType = async (
   nextMonth.setMonth(today.getMonth() + 1);
   const maxDate = nextMonth.toISOString().split("T")[0];
   const url =
-    type === "popular"
+    type === MovieSectionType.Popular
       ? `/movie/popular?page=${page}`
-      : type === "trending"
+      : type === MovieSectionType.Trending
       ? `/trending/movie/day?page=${page}`
-      : type === "upcoming"
+      : type === MovieSectionType.Upcoming
       ? `/discover/movie?include_adult=false&include_video=false&language=en-US&page=${page}&sort_by=popularity.desc&with_release_type=2|3&release_date.gte=${minDate}&release_date.lte=${maxDate}`
       : `/movie/now_playing?page=${page}`;
   try {

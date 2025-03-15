@@ -29,7 +29,7 @@ const HorizontalMoviesList = ({
 
   return (
     <div ref={containerRef} className="w-full overflow-x-auto">
-      <div className="flex space-x-4 p-4">
+      <div className="flex space-x-4">
         {moviesData.map((movie) => (
           <MovieCard key={movie.id} movie={movie} />
         ))}
