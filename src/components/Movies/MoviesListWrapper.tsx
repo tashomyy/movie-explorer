@@ -2,6 +2,7 @@ import { Suspense, lazy, useEffect } from "react";
 import { PossibleMovieLists } from "../../lib/types";
 import useInfiniteMovies from "../../hooks/useInfiniteMovies";
 import { MovieSectionType } from "../../lib/enums";
+import Loader from "../UI/Loader";
 
 const GridMoviesList = lazy(() => import("./GridMoviesList"));
 const HorizontalMoviesList = lazy(() => import("./HorizontalMoviesList"));
@@ -36,9 +37,7 @@ const PopularMovies = ({
         {type.toUpperCase()} Movies
       </h1>
 
-      <Suspense
-        fallback={<div className="text-center my-5">Loading movies...</div>}
-      >
+      <Suspense fallback={<Loader />}>
         {type === MovieSectionType.Popular ? (
           <GridMoviesList moviesData={movies} />
         ) : (

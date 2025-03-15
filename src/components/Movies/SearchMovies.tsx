@@ -7,6 +7,7 @@ import useDebounce from "../../hooks/useDebounce";
 import { fetchGenres } from "../../services/info";
 import { SearchType } from "../../lib/enums";
 import FormField from "../UI/FormField";
+import Loader from "../UI/Loader";
 
 const SearchMoviesList = () => {
   const [movies, setMovies] = useState<Movie[]>([]);
@@ -159,9 +160,7 @@ const SearchMoviesList = () => {
             </h1>
           ) : null
         ) : null}
-        {loading && (
-          <div className="text-center my-5">Loading more movies...</div>
-        )}
+        {loading && <Loader />}
       </div>
     </section>
   );
