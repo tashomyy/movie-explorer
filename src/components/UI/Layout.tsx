@@ -10,7 +10,9 @@ const Layout = () => {
       <main className="h-full container">
         <Outlet />
       </main>
-      <footer className="mt-auto">My App Footer</footer>
+      <footer className="mt-auto text-primary-text container">
+        &copy; 2025 tashomy
+      </footer>
       <ScrollTop />
       <ButtonScrollTop />
     </div>

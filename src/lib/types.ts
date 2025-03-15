@@ -9,8 +9,7 @@ export interface Movie {
   release_date: string;
   genre_ids: number[];
   backdrop_path: string;
-  director: string;
-  cast: [];
+  credits: { cast: { name: string }[]; crew: { name: string; job: string }[] };
 }
 
 export interface Genre {

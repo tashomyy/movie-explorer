@@ -67,7 +67,9 @@ export const fetchMoviesByType = async (
 
 export const fetchSingleMovie = async (id: string) => {
   try {
-    const response = await apiClient.get(`/movie/${id}`);
+    const response = await apiClient.get(
+      `/movie/${id}?append_to_response=credits`
+    );
     return response.data;
   } catch (error: any) {
     toast.error(

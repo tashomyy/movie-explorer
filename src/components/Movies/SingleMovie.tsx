@@ -83,7 +83,7 @@ const SingleMovie = () => {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-12">
-            <div className="flex flex-col gap-4 md:gap-12 w-full">
+            <div className="flex flex-col gap-4 md:gap-12 w-full order-2 md:order-1">
               {trailerKey && (
                 <div className="aspect-video">
                   <iframe
@@ -116,14 +116,18 @@ const SingleMovie = () => {
                 </button>
               </div>
             </div>
-            <div className="text-primary-text text-lg flex flex-col gap-2">
+            <div className="text-primary-text text-lg flex flex-col gap-2 order-1 md:order-2">
               <p>
                 <span className="font-bold">Director:</span>{" "}
-                {movie?.director || "N/A"}
+                {movie?.credits?.crew
+                  .filter((member) => member.job === "Director")
+                  .map((director) => director.name)
+                  .join(", ") || "N/A"}
               </p>
               <p>
                 <span className="font-bold">Starring:</span>{" "}
-                {movie?.cast?.slice(0, 5).join(", ") || "N/A"}
+                {movie?.credits?.cast?.map((item) => item.name).join(", ") ||
+                  "N/A"}
               </p>
               <div className="flex flex-wrap gap-4">
                 {movie && (
@@ -132,8 +136,8 @@ const SingleMovie = () => {
                     <AddToFavoritesButton movie={movie} />
                   </>
                 )}
-                <div className="flex items-center gap-2 text-yellow-400 font-bold text-xl">
-                  ⭐ {movie?.vote_average?.toFixed(1)} / 10
+                <div className="flex items-center gap-2 text-accent font-bold text-xl">
+                  {movie?.vote_average?.toFixed(1)} ⭐
                 </div>
               </div>
             </div>
