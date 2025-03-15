@@ -16,7 +16,7 @@ const MovieCard = ({ movie }: MovieCardProps) => {
   return (
     <Link
       to={`/movie/${movie?.id}`}
-      className="relative flex flex-col my-6 bg-white shadow-sm border border-slate-200 rounded-lg min-w-[350px]"
+      className="relative flex flex-col my-6 bg-white dark:bg-secondary shadow-sm border border-slate-200 rounded-lg min-w-[350px]"
     >
       <div className="relative p-2.5 h-120 overflow-hidden rounded-xl bg-clip-border">
         {imageUrl ? (
@@ -38,21 +38,21 @@ const MovieCard = ({ movie }: MovieCardProps) => {
           />
         )}
       </div>
-      <div className="p-4">
+      <div className="p-4 flex flex-col gap-2">
         <div className="mb-2 flex items-center justify-between">
-          <p className="text-slate-800 text-xl font-semibold">
+          <p className="text-text-primary element-heading font-semibold">
             {" "}
             {movie?.title || ""}
           </p>
-          <p className="text-cyan-600 text-xl font-semibold">
+          <p className="!text-accent element-heading font-semibold">
             {movie.vote_average?.toFixed(1)} ⭐
           </p>
         </div>
-        <p className="text-slate-600 leading-normal font-light line-clamp-3">
+        <p className="text-text-primary leading-normal font-light line-clamp-3 secondary-body">
           {movie?.overview || ""}...
         </p>
         <div
-          className="w-max ml-auto flex justify-between items-center gap-2 p-2 bg-gradient-to-t from-white via-white/80 to-transparent"
+          className="w-max ml-auto flex justify-between items-center gap-2 p-2 bg-transparent"
           onClick={(e) => e.preventDefault()}
         >
           <AddToWatchlistButton movie={movie} />
