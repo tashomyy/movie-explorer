@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { Movie } from "../../lib/types";
 import { useState } from "react";
+import { AddToFavoritesButton, AddToWatchlistButton } from "./MovesListButtons";
 
 interface MovieCardProps {
   movie: Movie;
@@ -13,11 +14,8 @@ const MovieCard = ({ movie }: MovieCardProps) => {
     : null;
 
   return (
-    <Link
-      to={`/movie/${movie.id}`}
-      className="relative flex flex-col gap-3 justify-end items-center text-center bg-card rounded-xl p-4 shadow-lg h-[400px] md:h-[500px] lg:h-[600px] isolate group overflow-hidden min-w-[300px]"
-    >
-      <div className="absolute inset-0 w-full h-full z-[-1] p-4 rounded-xl bg-cover bg-no-repeat transition-opacity duration-500">
+    <div className="relative flex flex-col my-6 bg-white shadow-sm border border-slate-200 rounded-lg min-w-[350px]">
+      <div className="relative p-2.5 h-120 overflow-hidden rounded-xl bg-clip-border">
         {imageUrl ? (
           <img
             src={imageUrl}
@@ -25,7 +23,7 @@ const MovieCard = ({ movie }: MovieCardProps) => {
             loading="lazy"
             onLoad={() => setIsLoaded(true)}
             onLoadStart={() => setIsLoaded(false)}
-            className={`w-full h-full object-cover rounded-xl transition-opacity ${
+            className={`h-full w-full object-cover rounded-md transition-opacity ${
               isLoaded ? "opacity-100" : "opacity-0"
             }`}
           />
@@ -37,19 +35,25 @@ const MovieCard = ({ movie }: MovieCardProps) => {
           />
         )}
       </div>
-
-      <div className="relative w-full h-max flex flex-col gap-2 justify-start items-center text-center bg-card/60 group-hover:bg-card/80 transition-colors duration-200 cursor-pointer rounded-xl px-2 py-4 backdrop-blur-[3px] transition-transform group-hover:scale-105">
-        <h2 className="secondary-heading font-semibold pointer-events-none">
-          {movie?.title || ""}
-        </h2>
-        <p className="primary-body pointer-events-none line-clamp-3">
-          {movie?.overview || ""}
+      <div className="p-4">
+        <div className="mb-2 flex items-center justify-between">
+          <p className="text-slate-800 text-xl font-semibold">
+            {" "}
+            {movie?.title || ""}
+          </p>
+          <p className="text-cyan-600 text-xl font-semibold">
+            {movie.vote_average?.toFixed(1)} ⭐
+          </p>
+        </div>
+        <p className="text-slate-600 leading-normal font-light">
+          {movie?.overview.slice(0, 100) || ""}
         </p>
-        <span className="secondary-body font-bold pointer-events-none">
-          {movie.vote_average?.toFixed(1)} ⭐
-        </span>
+        <div className="w-full flex justify-between items-center gap-2 p-2 bg-gradient-to-t from-white via-white/80 to-transparent">
+          <AddToWatchlistButton movie={movie} />
+          <AddToFavoritesButton movie={movie} />
+        </div>
       </div>
-    </Link>
+    </div>
   );
 };
 

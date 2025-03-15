@@ -40,4 +40,5 @@ export const NAV_LINKS: NavItem[] = [
     scrollTo: "popular-section",
     path: "#popular",
   },
+  { name: "Lists", path: "/lists", isLink: true },
 ];

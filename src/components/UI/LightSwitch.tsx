@@ -7,25 +7,24 @@ interface LightSwitchProps {
 }
 
 const LightSwitch = ({ toggle, theme }: LightSwitchProps) => {
-  const iconClassName = "pointer-events-none h-4 w-4 stroke-current";
-
   const isLightMode = theme === Theme.Light;
-  const content = {
-    icon: isLightMode ? (
-      <MoonIcon className={iconClassName} />
-    ) : (
-      <SunIcon className={iconClassName} />
-    ),
-    text: isLightMode ? "Dark mode" : "Light mode",
-  };
 
   return (
     <button
-      className="cursor-pointer flex items-center justify-center gap-2 bg-primary px-4 py-1 rounded-lg hover:bg-hover-color transition-color duration-300"
       onClick={toggle}
-      aria-label={content.text}
+      className={`relative flex items-center justify-center gap-2 p-3 transition-all duration-200 rounded-full shadow-md ${
+        isLightMode
+          ? "bg-primary hover:bg-gray-300 active:bg-gray-400"
+          : "bg-primary hover:bg-gray-700 active:bg-gray-600"
+      }`}
+      aria-label={isLightMode ? "Switch to Dark Mode" : "Switch to Light Mode"}
+      aria-live="polite"
     >
-      {content.icon} <span className="pointer-events-none">{content.text}</span>
+      {isLightMode ? (
+        <MoonIcon className="w-6 h-6 text-gray-700 transition-all duration-200" />
+      ) : (
+        <SunIcon className="w-6 h-6 text-yellow-400 transition-all duration-200" />
+      )}
     </button>
   );
 };
