@@ -5,6 +5,9 @@ import LightSwitch from "./LightSwitch";
 import { handleNavigationScroll } from "../../lib/helpers";
 import { NavItem } from "../../lib/types";
 import { NAV_LINKS } from "../../lib/constants";
+import { useAuth } from "../../store/AuthContext";
+import LogoutButton from "../Auth/LogoutButton";
+import LoginButton from "../Auth/LoginButtons";
 
 interface HeaderProps {
   classNameWidth: string;
@@ -14,6 +17,8 @@ const Header = ({ classNameWidth = "" }: HeaderProps) => {
   const { toggle, theme } = useTheme();
   const navigate = useNavigate();
   const isScrolled = useScrollDetection();
+
+  const { user } = useAuth();
 
   const handleNavClick = (scrollTo?: string, path?: string, isLink = false) => {
     if (scrollTo) handleNavigationScroll(scrollTo, navigate);
@@ -47,6 +52,8 @@ const Header = ({ classNameWidth = "" }: HeaderProps) => {
     );
   };
 
+  console.log(user);
+
   return (
     <header
       className={`flex flex-col sticky top-0 z-20 py-6 gap-4 ${
@@ -57,7 +64,22 @@ const Header = ({ classNameWidth = "" }: HeaderProps) => {
         <Link to="/" className="secondary-heading">
           Movie Explorer
         </Link>
-        <LightSwitch toggle={toggle} theme={theme} />
+        <div className="flex gap-8 items-center">
+          <LightSwitch toggle={toggle} theme={theme} />
+          {user ? (
+            <div className="flex items-center gap-4">
+              <img
+                src={user?.photoURL as string}
+                alt="Profile"
+                className="w-8 h-8 rounded-full"
+              />
+              <p>{user.displayName}</p>
+              <LogoutButton />
+            </div>
+          ) : (
+            <LoginButton />
+          )}
+        </div>
       </div>
       <nav className="container flex justify-between gap-4 flex-wrap">
         {NAV_LINKS.map(renderNavItem)}
