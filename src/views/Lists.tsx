@@ -1,36 +1,20 @@
-import { Link } from "react-router-dom";
-import { useMovieLists } from "../store/MoviesListContext";
-import GridMoviesList from "../components/Movies/GridMoviesList";
+import { lazy, Suspense } from "react";
+import Loader from "../components/UI/Loader";
+import { ErrorBoundary } from "react-error-boundary";
+
+const ListsDisplay = lazy(() => import("../components/Movies/ListsDisplay"));
 
 const ListsPage = () => {
-  const { watchlist, favorites } = useMovieLists();
-
   return (
-    <div className="max-w-7xl mx-auto flex flex-col gap-12 lg:gap-28">
-      <h1 className="primary-heading text-center">Your Lists</h1>
-
-      <section>
-        <h2 className="secondary-heading">Watchlist</h2>
-        {watchlist.length === 0 ? (
-          <p className="text-gray-500">No movies in your watchlist.</p>
-        ) : (
-          <GridMoviesList moviesData={watchlist} />
-        )}
-      </section>
-
-      <section className="mt-6">
-        <h2 className="secondary-heading">Favorites</h2>
-        {favorites.length === 0 ? (
-          <p className="text-gray-500">No movies in your favorites.</p>
-        ) : (
-          <GridMoviesList moviesData={favorites} />
-        )}
-      </section>
-
-      <Link to="/" className="block text-center text-accent hover:underline">
-        Back to Home
-      </Link>
-    </div>
+    <ErrorBoundary
+      fallback={
+        <p className="text-red-500">Something went wrong! Please try again.</p>
+      }
+    >
+      <Suspense fallback={<Loader />}>
+        <ListsDisplay />
+      </Suspense>
+    </ErrorBoundary>
   );
 };
 
