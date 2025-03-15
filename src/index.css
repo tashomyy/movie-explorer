@@ -67,6 +67,19 @@ body {
   background: url("/dark-bg.jpg") center center no-repeat;
 }
 
+/* icons for action buttons */
+.active-icon {
+  @apply w-7 h-7 text-white transition-all duration-200;
+}
+
+.inactive-icon {
+  @apply w-7 h-7 stroke-current text-text-primary transition-all duration-200;
+}
+
+.inactive-bg {
+  @apply bg-primary hover:bg-primary/80;
+}
+
 /* for main page headings */
 .primary-heading {
   @apply text-text-primary text-3xl md:text-4xl lg:text-5xl font-heading font-bold;

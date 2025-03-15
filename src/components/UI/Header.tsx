@@ -50,7 +50,7 @@ const Header = ({ classNameWidth = "" }: HeaderProps) => {
   return (
     <header
       className={`flex flex-col sticky top-0 z-20 py-6 gap-4 ${
-        isScrolled ? "bg-primary" : "bg-transparent"
+        isScrolled ? "bg-secondary" : "bg-transparent"
       }`}
     >
       <div className={`flex justify-between items-center ${classNameWidth}`}>
