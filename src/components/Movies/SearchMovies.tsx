@@ -54,13 +54,17 @@ const SearchMoviesList = () => {
     }
 
     setLoading(true);
-    fetchSearchMovies(fetchQuery, page, fetchGenre, fetchYear).then((data) => {
-      setMovies((prev) =>
-        page === 1 ? data.results : [...prev, ...data.results]
-      );
-      setLoading(false);
-      setEmpty(data.results.length === 0);
-    });
+    fetchSearchMovies(fetchQuery, page, fetchGenre, fetchYear)
+      .then((data) => {
+        setMovies((prev) =>
+          page === 1 ? data.results : [...prev, ...data.results]
+        );
+        setLoading(false);
+        setEmpty(data.results.length === 0);
+      })
+      .catch(() => {
+        setLoading(false);
+      });
   }, [debouncedQuery, page, selectedGenre, selectedYear]);
 
   const handleScroll = (e: React.UIEvent<HTMLDivElement>) => {
