@@ -22,7 +22,7 @@ const ActionButton = ({
   return (
     <button
       onClick={onClick}
-      className={`p-2 rounded-md transition-all duration-300 
+      className={`p-2 rounded-md transition-all duration-300 cursor-pointer 
         ${
           isActive
             ? `${activeBg} text-primary-text`

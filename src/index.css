@@ -60,7 +60,7 @@ body {
 }
 
 .nav-item {
-  @apply text-text-primary font-body relative transition-all duration-300 cursor-pointer;
+  @apply text-text-primary text-xl font-bold font-body relative transition-all duration-300 cursor-pointer;
 }
 
 .dark body {
