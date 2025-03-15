@@ -1,7 +1,6 @@
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { fetchSingleMovie, fetchTrailer } from "../../services/movies";
-import { toast } from "react-toastify";
 import { Movie } from "../../lib/types";
 import { AddToFavoritesButton, AddToWatchlistButton } from "./MovesListButtons";
 
@@ -18,13 +17,16 @@ const SingleMovie = () => {
       return;
     }
 
-    fetchSingleMovie(id).then((data) => {
-      setMovie(data);
-    });
+    fetchSingleMovie(id)
+      .then((data) => {
+        setMovie(data);
+      })
+      .catch((error) =>
+        setError(error.message || "Error in fetching single movie")
+      );
   }, [id]);
 
   if (error) {
-    toast.error(error);
     throw new Error(error);
   }
 
