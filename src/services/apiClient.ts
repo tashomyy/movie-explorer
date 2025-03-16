@@ -1,9 +1,10 @@
 import axios, { AxiosInstance } from "axios";
 
-export const BASE_URL: string = import.meta.env.VITE_API_URL;
 export const API_KEY: string = import.meta.env.VITE_TMDB_API_KEY;
 
-export const apiClient: AxiosInstance = axios.create({ baseURL: BASE_URL });
+export const apiClient: AxiosInstance = axios.create({
+  baseURL: "https://api.themoviedb.org/3",
+});
 
 apiClient.interceptors.request.use(
   (config) => {
