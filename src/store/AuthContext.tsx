@@ -5,7 +5,6 @@ import {
   onAuthStateChanged,
   signInWithPopup,
   GoogleAuthProvider,
-  signOut,
 } from "firebase/auth";
 import { auth } from "../firebase/firebase";
 import { toast } from "react-toastify";
@@ -33,6 +32,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   const loginWithGoogle = async () => {
     const provider = new GoogleAuthProvider();
     try {
+      await auth.signOut();
+      provider.setCustomParameters({ prompt: "select_account" });
       await signInWithPopup(auth, provider);
     } catch (error) {
       toast.error("Google Sign-in error");
@@ -42,7 +43,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
 
   const logout = async () => {
     try {
-      await signOut(auth);
+      await auth.signOut();
     } catch (error) {
       toast.error("Logout error");
       console.error("Logout error:", error);
