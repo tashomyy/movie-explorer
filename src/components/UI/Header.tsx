@@ -13,7 +13,7 @@ const Header = ({ classNameWidth = "" }: HeaderProps) => {
 
   return (
     <header
-      className={`grid grid-cols-2 lg:flex lg:flex-col sticky top-0 z-20 py-6 gap-6 ${
+      className={`grid grid-cols-2 lg:flex lg:flex-col sticky top-0 z-20 py-4 gap-2 ${
         isScrolled ? "bg-white dark:bg-secondary" : "bg-transparent"
       }`}
     >

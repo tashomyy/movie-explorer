@@ -89,30 +89,26 @@ const SearchMoviesList = () => {
   return (
     <section
       id="movie-finder-section"
-      className={`app flex flex-col bg-card rounded-lg py-8 px-2 sm:px-8 border border-slate-200 ${
+      className={`app flex flex-col bg-card rounded-lg pt-8 px-2 sm:px-8 border border-slate-200 ${
         query || selectedGenre || selectedYear
-          ? "min-h-[500px] h-[70vh]"
+          ? "min-h-[800px] h-[70vh]"
           : "h-max"
       }`}
     >
       <h1 className="secondary-heading text-center">👀 Movie finder 👀</h1>
 
-      <div className="flex justify-center my-4">
+      <div className="flex flex-col sm:flex-row items-center sm:justify-around my-4 gap-4 mx-auto min-w-full sm:min-w-[500px] pb-4">
         <FormField
-          label="Search Type"
+          label=""
           name="search-type"
           type="select"
           value={searchType}
           options={SEARCH_TYPES}
           onChange={(value) => setSearchType(value as SearchType)}
         />
-      </div>
-
-      {/* input fields for every filtering choice */}
-      <div className="flex justify-center gap-4 mb-4">
         {searchType === SearchType.Name && (
           <FormField
-            label="Search for a movie"
+            label=""
             name="search-name"
             type="text"
             value={query}
@@ -123,7 +119,7 @@ const SearchMoviesList = () => {
         )}
         {searchType === SearchType.Genre && (
           <FormField
-            label="Select Genre"
+            label=""
             name="search-genre"
             type="select"
             placeholder="Select a genre"
@@ -138,7 +134,7 @@ const SearchMoviesList = () => {
         )}
         {searchType === SearchType.Year && (
           <FormField
-            label="Select Year"
+            label=""
             name="search-genre"
             type="select"
             placeholder="Select a year"
@@ -151,7 +147,7 @@ const SearchMoviesList = () => {
       </div>
 
       <div
-        className={`flex-1 overflow-y-auto px-4 transition-[opacity] duration-300 flex-col ${
+        className={`flex-1 overflow-y-auto transition-[opacity] duration-300 flex-col scale-80 -mt-24 ${
           query || selectedGenre || selectedYear
             ? "opacity-100 flex"
             : "opacity-0 hidden"

@@ -37,7 +37,7 @@ const FormField: React.FC<FormFieldProps> = ({
             value={value as string}
             placeholder={placeholder}
             onChange={(e) => onChange(e.target.value)}
-            className="w-full bg-transparent placeholder:text-[#333] dark:placeholder:text-white text-primary-text text-sm border border-slate-200 rounded-md px-3 py-2 transition duration-300 ease focus:outline-none focus:border-blue-500 hover:border-blue-300 shadow-sm focus:shadow pr-8"
+            className="w-full bg-transparent placeholder:text-[#333] dark:placeholder:text-white text-primary-text text-xs sm:text-sm border border-slate-200 rounded-md px-3 py-2 transition duration-300 ease focus:outline-none focus:border-blue-500 hover:border-blue-300 shadow-sm focus:shadow pr-8"
           />
 
           {onReset && value && <ResetButton onReset={onReset} />}
@@ -55,7 +55,7 @@ const FormField: React.FC<FormFieldProps> = ({
             }
             onChange={(e) => onChange(e.target.value)}
             className="w-full bg-transparent
-            text-primary-text text-sm border border-slate-200 dark:bg-card 
+            text-primary-text text-xs sm:text-sm border border-slate-200 dark:bg-card 
             rounded-md px-3 py-2 transition duration-300 ease 
             focus:outline-none focus:border-accent 
             hover:border-accent shadow-sm focus:shadow appearance-none pr-8 cursor-pointer"
