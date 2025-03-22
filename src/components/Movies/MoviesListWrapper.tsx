@@ -1,8 +1,9 @@
-import { Suspense, lazy, useEffect } from "react";
+import { Suspense, lazy } from "react";
 import { PossibleMovieLists } from "../../lib/types";
 import useInfiniteMovies from "../../hooks/useInfiniteMovies";
 import { MovieSectionType } from "../../lib/enums";
 import Loader from "../UI/Loader";
+import useInfiniteScroll from "../../hooks/useInfiniteScroll";
 
 const GridMoviesList = lazy(() => import("./GridMoviesList"));
 const HorizontalMoviesList = lazy(() => import("./HorizontalMoviesList"));
@@ -16,20 +17,11 @@ const MoviesListWrapper = ({
 }: PopularMoviesProps) => {
   const { movies, loading, loadMore } = useInfiniteMovies(type);
 
-  useEffect(() => {
-    if (type === MovieSectionType.Popular) {
-      const handleScroll = () => {
-        if (
-          window.innerHeight + window.scrollY >=
-          document.documentElement.scrollHeight - 100
-        ) {
-          loadMore();
-        }
-      };
-      window.addEventListener("scroll", handleScroll);
-      return () => window.removeEventListener("scroll", handleScroll);
-    }
-  }, [type, loadMore]);
+  const loaderRef = useInfiniteScroll({
+    callback: loadMore,
+    root: null,
+    direction: "vertical",
+  });
 
   return (
     <section id={`${type}-section`}>
@@ -45,6 +37,9 @@ const MoviesListWrapper = ({
         )}
       </Suspense>
       {loading && <Loader />}
+      {type === MovieSectionType.Popular && (
+        <div ref={loaderRef} className="min-h-[1px] h-4"></div>
+      )}
     </section>
   );
 };

@@ -1,6 +1,7 @@
-import { useRef, useEffect } from "react";
+import { useRef } from "react";
 import { MoviesListProps } from "../../lib/types";
 import MovieCard from "./MovieCard";
+import useInfiniteScroll from "../../hooks/useInfiniteScroll";
 
 interface HorizontalMoviesListProps extends MoviesListProps {
   loadMore: () => void;
@@ -11,21 +12,11 @@ const HorizontalMoviesList = ({
   loadMore,
 }: HorizontalMoviesListProps) => {
   const containerRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      if (!containerRef.current) return;
-      const { scrollLeft, scrollWidth, clientWidth } = containerRef.current;
-
-      if (scrollWidth - scrollLeft <= clientWidth + 100) {
-        loadMore();
-      }
-    };
-
-    const container = containerRef.current;
-    container?.addEventListener("scroll", handleScroll);
-    return () => container?.removeEventListener("scroll", handleScroll);
-  }, [loadMore]);
+  const loaderRef = useInfiniteScroll({
+    callback: loadMore,
+    root: containerRef.current,
+    direction: "horizontal",
+  });
 
   return (
     <div ref={containerRef} className="w-full overflow-x-auto">
@@ -33,6 +24,10 @@ const HorizontalMoviesList = ({
         {moviesData.map((movie) => (
           <MovieCard key={movie.id} movie={movie} />
         ))}
+        <div
+          ref={loaderRef}
+          className="min-w-[4px] w-4 h-full shrink-0 border"
+        ></div>
       </div>
     </div>
   );
