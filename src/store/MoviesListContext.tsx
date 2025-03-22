@@ -1,4 +1,10 @@
-import React, { createContext, useContext, useState, useEffect } from "react";
+import React, {
+  createContext,
+  useContext,
+  useState,
+  useEffect,
+  useCallback,
+} from "react";
 import { Movie } from "../lib/types";
 import { fetchMovieProviders } from "../services/movies";
 
@@ -75,27 +81,33 @@ export const MovieListsProvider: React.FC<{ children: React.ReactNode }> = ({
     localStorage.setItem("favorites", JSON.stringify(favorites));
   }, [favorites]);
 
-  const addToWatchlist = async (movie: Movie) => {
-    if (!watchlist.some((m) => m.id === movie.id)) {
-      const movieWithProviders = await updateMovieWithProviders(movie);
-      setWatchlist([...watchlist, movieWithProviders]);
-    }
-  };
+  const addToWatchlist = useCallback(
+    async (movie: Movie) => {
+      if (!watchlist.some((m) => m.id === movie.id)) {
+        const movieWithProviders = await updateMovieWithProviders(movie);
+        setWatchlist([...watchlist, movieWithProviders]);
+      }
+    },
+    [watchlist]
+  );
 
-  const removeFromWatchlist = (id: string) => {
+  const removeFromWatchlist = useCallback((id: string) => {
     setWatchlist(watchlist.filter((movie) => movie.id !== id));
-  };
+  }, []);
 
-  const addToFavorites = async (movie: Movie) => {
-    if (!favorites.some((m) => m.id === movie.id)) {
-      const movieWithProviders = await updateMovieWithProviders(movie);
-      setFavorites([...favorites, movieWithProviders]);
-    }
-  };
+  const addToFavorites = useCallback(
+    async (movie: Movie) => {
+      if (!favorites.some((m) => m.id === movie.id)) {
+        const movieWithProviders = await updateMovieWithProviders(movie);
+        setFavorites([...favorites, movieWithProviders]);
+      }
+    },
+    [favorites]
+  );
 
-  const removeFromFavorites = (id: string) => {
+  const removeFromFavorites = useCallback((id: string) => {
     setFavorites(favorites.filter((movie) => movie.id !== id));
-  };
+  }, []);
 
   return (
     <MovieListsContext.Provider
