@@ -1,4 +1,3 @@
-import React from "react";
 import { ChevronDownIcon } from "@heroicons/react/24/solid";
 import ResetButton from "./ResetButton";
 
@@ -14,7 +13,7 @@ interface FormFieldProps {
   className?: string;
 }
 
-const FormField: React.FC<FormFieldProps> = ({
+const FormField = ({
   label,
   name,
   type,
@@ -24,7 +23,7 @@ const FormField: React.FC<FormFieldProps> = ({
   placeholder,
   onReset,
   className,
-}) => {
+}: FormFieldProps) => {
   return (
     <div className={`flex flex-col gap-2 w-full max-w-md ${className}`}>
       <label className="text-primary-text font-medium">{label}</label>
