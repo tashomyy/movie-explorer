@@ -42,3 +42,5 @@ export const NAV_LINKS: NavItem[] = [
   },
   { name: "Lists", path: "/lists", isLink: true },
 ];
+
+export const MOVIE_LISTS_RENDER_NUM = 5;

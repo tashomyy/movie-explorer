@@ -2,12 +2,17 @@ import { Link } from "react-router-dom";
 import { useMovieLists } from "../../store/MoviesListContext";
 import { useMemo, useState } from "react";
 import HorizontalMoviesList from "./HorizontalMoviesList";
+import { MOVIE_LISTS_RENDER_NUM } from "../../lib/constants";
 
 const ListsDisplay = () => {
   const { watchlist, favorites } = useMovieLists();
 
-  const [visibleWatchCount, setVisibleWatchCount] = useState(5);
-  const [visibleFavCount, setVisibleFavCount] = useState(5);
+  const [visibleWatchCount, setVisibleWatchCount] = useState(
+    MOVIE_LISTS_RENDER_NUM
+  );
+  const [visibleFavCount, setVisibleFavCount] = useState(
+    MOVIE_LISTS_RENDER_NUM
+  );
 
   const visibleWatchlist = useMemo(
     () => watchlist.slice(0, visibleWatchCount),
@@ -30,7 +35,9 @@ const ListsDisplay = () => {
         ) : (
           <HorizontalMoviesList
             moviesData={visibleWatchlist}
-            loadMore={() => setVisibleWatchCount((prev) => prev + 20)}
+            loadMore={() =>
+              setVisibleWatchCount((prev) => prev + MOVIE_LISTS_RENDER_NUM)
+            }
           />
         )}
       </section>
@@ -42,7 +49,9 @@ const ListsDisplay = () => {
         ) : (
           <HorizontalMoviesList
             moviesData={visibleFavorites}
-            loadMore={() => setVisibleFavCount((prev) => prev + 20)}
+            loadMore={() =>
+              setVisibleFavCount((prev) => prev + MOVIE_LISTS_RENDER_NUM)
+            }
           />
         )}
       </section>
