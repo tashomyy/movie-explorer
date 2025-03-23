@@ -1,12 +1,7 @@
-import React, {
-  createContext,
-  useContext,
-  useState,
-  useEffect,
-  useCallback,
-} from "react";
+import React, { createContext, useContext, useState, useEffect } from "react";
 import { Movie } from "../lib/types";
-import { fetchMovieProviders } from "../services/movies";
+import { useUpdateMovieProviders } from "../hooks/useUpdateMovieProviders";
+import { useListManager } from "../hooks/useListManager";
 
 interface MovieListsContextProps {
   watchlist: Movie[];
@@ -32,46 +27,33 @@ export const MovieListsProvider: React.FC<{ children: React.ReactNode }> = ({
     return JSON.parse(localStorage.getItem("favorites") || "[]");
   });
 
-  const updateMovieWithProviders = async (movie: Movie) => {
-    const storedProviders = JSON.parse(
-      localStorage.getItem("movieProviders") || "{}"
-    );
+  const updateMoviesList = useUpdateMovieProviders();
 
-    if (storedProviders[movie.id]) {
-      return { ...movie, providers: storedProviders[movie.id] };
-    }
+  const { addToList: addToWatchlist, removeFromList: removeFromWatchlist } =
+    useListManager({
+      list: watchlist,
+      setList: setWatchlist,
+      updateMoviesList,
+    });
 
-    try {
-      const providersData = await fetchMovieProviders(movie.id);
-
-      const updatedProviders = {
-        ...storedProviders,
-        [movie.id]: providersData,
-      };
-
-      localStorage.setItem("movieProviders", JSON.stringify(updatedProviders));
-      return { ...movie, providers: providersData };
-    } catch (error) {
-      console.error(`Failed to fetch providers for ${movie.id}`, error);
-      return movie;
-    }
-  };
+  const { addToList: addToFavorites, removeFromList: removeFromFavorites } =
+    useListManager({
+      list: favorites,
+      setList: setFavorites,
+      updateMoviesList,
+    });
 
   useEffect(() => {
-    const updateLists = async () => {
-      const updatedWatchlist = await Promise.all(
-        watchlist.map(updateMovieWithProviders)
-      );
-      const updatedFavorites = await Promise.all(
-        favorites.map(updateMovieWithProviders)
-      );
+    const runUpdate = async () => {
+      const updatedWatchlist = await updateMoviesList(watchlist);
+      const updatedFavorites = await updateMoviesList(favorites);
 
       setWatchlist(updatedWatchlist);
       setFavorites(updatedFavorites);
     };
 
-    updateLists();
-  }, []);
+    runUpdate();
+  }, [updateMoviesList]);
 
   useEffect(() => {
     localStorage.setItem("watchlist", JSON.stringify(watchlist));
@@ -80,34 +62,6 @@ export const MovieListsProvider: React.FC<{ children: React.ReactNode }> = ({
   useEffect(() => {
     localStorage.setItem("favorites", JSON.stringify(favorites));
   }, [favorites]);
-
-  const addToWatchlist = useCallback(
-    async (movie: Movie) => {
-      if (!watchlist.some((m) => m.id === movie.id)) {
-        const movieWithProviders = await updateMovieWithProviders(movie);
-        setWatchlist([...watchlist, movieWithProviders]);
-      }
-    },
-    [watchlist]
-  );
-
-  const removeFromWatchlist = useCallback((id: string) => {
-    setWatchlist(watchlist.filter((movie) => movie.id !== id));
-  }, []);
-
-  const addToFavorites = useCallback(
-    async (movie: Movie) => {
-      if (!favorites.some((m) => m.id === movie.id)) {
-        const movieWithProviders = await updateMovieWithProviders(movie);
-        setFavorites([...favorites, movieWithProviders]);
-      }
-    },
-    [favorites]
-  );
-
-  const removeFromFavorites = useCallback((id: string) => {
-    setFavorites(favorites.filter((movie) => movie.id !== id));
-  }, []);
 
   return (
     <MovieListsContext.Provider
