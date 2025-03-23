@@ -1,9 +1,23 @@
 import { Link } from "react-router-dom";
-import GridMoviesList from "./GridMoviesList";
 import { useMovieLists } from "../../store/MoviesListContext";
+import { useMemo, useState } from "react";
+import HorizontalMoviesList from "./HorizontalMoviesList";
 
 const ListsDisplay = () => {
   const { watchlist, favorites } = useMovieLists();
+
+  const [visibleWatchCount, setVisibleWatchCount] = useState(5);
+  const [visibleFavCount, setVisibleFavCount] = useState(5);
+
+  const visibleWatchlist = useMemo(
+    () => watchlist.slice(0, visibleWatchCount),
+    [watchlist, visibleWatchCount]
+  );
+
+  const visibleFavorites = useMemo(
+    () => favorites.slice(0, visibleFavCount),
+    [favorites, visibleFavCount]
+  );
 
   return (
     <div className="max-w-7xl mx-auto flex flex-col gap-12 lg:gap-28">
@@ -14,7 +28,10 @@ const ListsDisplay = () => {
         {watchlist.length === 0 ? (
           <p className="text-gray-500">No movies in your watchlist.</p>
         ) : (
-          <GridMoviesList moviesData={watchlist} />
+          <HorizontalMoviesList
+            moviesData={visibleWatchlist}
+            loadMore={() => setVisibleWatchCount((prev) => prev + 20)}
+          />
         )}
       </section>
 
@@ -23,7 +40,10 @@ const ListsDisplay = () => {
         {favorites.length === 0 ? (
           <p className="text-gray-500">No movies in your favorites.</p>
         ) : (
-          <GridMoviesList moviesData={favorites} />
+          <HorizontalMoviesList
+            moviesData={visibleFavorites}
+            loadMore={() => setVisibleFavCount((prev) => prev + 20)}
+          />
         )}
       </section>
 
